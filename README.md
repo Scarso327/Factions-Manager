@@ -1,7 +1,7 @@
 # Factions Manager
 A web based faction manager for ArmA 3 Life servers.
 
-## Simple Yet
+## Simple Setup
 Replace the Name & Steamid for the example users in the table "members".
 
 ## Example Data
