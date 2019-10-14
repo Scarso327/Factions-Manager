@@ -10,7 +10,8 @@ class Application {
     public static $factions = array ();
 
     public function __construct() {
-        self::$factions = System::getFactions();
+        $system = new System;
+        self::$factions = $system->getFactions();
 
         self::URLSetup();
         
