@@ -9,6 +9,7 @@
 */
 return array(
     'site-name' => 'Faction Database', // This is the name of our website. E.g. Microsoft or Apple or Steam.
+    'sub-directory' => '', // Required if the site is not in the root folder.
     'version' => '1', // Holds framework version. Literally pointless...
     'db-type' => 'mysql', // We assume you're using the same type for both databases...
     'db-host' => array('localhost','localhost'), // Key 0 = Life Server Database, Key 1 = Web Server Database

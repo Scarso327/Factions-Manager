@@ -11,7 +11,7 @@ define('Errors', ROOT.'errors.php');
 
 define('URL_PROTOCOL', ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://"));
 define('URL_DOMAIN', $_SERVER['HTTP_HOST']);
-define('URL', URL_PROTOCOL . URL_DOMAIN . '/');
+define('URL', URL_PROTOCOL . URL_DOMAIN . '/' . SETTING["sub-directory"]);
 
 // Database Settings (For Webserver)
 define('DB_TYPE', SETTING["db-type"]);
