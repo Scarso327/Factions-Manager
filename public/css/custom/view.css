@@ -1,0 +1,260 @@
+select, input {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 5px;
+    outline: 0;
+    color: #71686e;
+    font-size: 16px;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.overview {
+    display: flex;
+    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+    padding: 20px 0px;
+    margin-bottom: 20px;
+}
+
+.overview .steam-pfp-box {
+    border-radius: 10px;
+    margin-right: 10px;
+    padding: 2px;
+}
+
+.overview .steam-pfp {
+    border-radius: 10px;
+    vertical-align: middle;
+}
+
+.overview div {
+    font-size: 14px;
+}
+
+.overview div span {
+    font-size: 24px;
+    display: block;
+}
+
+.overview div.action {
+    margin-left: auto;
+    display: flex;
+    flex-direction: column;
+    padding-top: 13px;
+}
+
+.overview div span.station {
+    font-size: 12px;
+}
+
+.overview div.action a {
+    cursor: pointer;
+    outline: none;
+    margin: 1px;
+    padding: .5em 1em;
+    text-transform: none;
+    text-shadow: none;
+    font-size: 15px;
+    color: #fafafa;
+    text-decoration: none;
+    background-image: none;
+    background-color: #191919;
+    border: none;
+    border-radius: 5px;
+    height: fit-content;
+    text-align: center;
+}
+
+.roster {
+    margin-top: 0;
+}
+
+.formType.Interview {
+    background-color: #4c1030;
+    color: #e4e4e4;
+}
+
+.formType.promotion {
+    background-color: #4c1031;
+    color: #e4e4e4;
+}
+
+.formType.demotion {
+    background-color: #660000;
+    color: #e4e4e4;
+}
+
+.formType.rankChange {
+    background-color: #6fa7dd;
+    color: #e4e4e4;
+}
+
+.formType.NameChange {
+    background-color: #61a1d9;
+    color: #e4e4e4;
+}
+
+.formType.NameChangeStatus, .formType.Manually {
+    background-color: #102c43;
+    color: #e4e4e4;
+}
+
+.formType.Passed, .formType.Added, .formType.Accepted, .formType.Completed, .formType.Unarchived, .formType.Approved, .formType.Started {
+    background-color: #6aa74f;
+    color: #e4e4e4;
+}
+
+.formType.Note {
+    background-color: #674fa6;
+    color: #e4e4e4;
+}
+
+.formType.Suspension {
+    background-color: #351d74;
+    color: #e4e4e4;
+}
+
+.formType.Fire {
+    background-color: #cc0001;
+    color: #e4e4e4;
+}
+
+.formType.Fired, .formType.SCWP, .formType.BCWP, .formType.WarningPoint, .formType.Ended {
+    background-color: #660000;
+    color: #e4e4e4;
+}
+
+.formType.Issued, .formType.Denied, .formType.Failed {
+    background-color: #cc0001;
+    color: #e4e4e4;
+}
+
+.formType.Resignation {
+    background-color: #0f4142;
+    color: #e4e4e4;
+}
+
+.formType.Processed {
+    background-color: #52bd42;
+    color: #e4e4e4;
+}
+
+.formType.SectionTransfer {
+    background-color: #00d27f;
+    color: #e4e4e4;
+}
+
+.formType.Transfer, .formType.TransferRequest {
+    background-color: #00616d;
+    color: #e4e4e4;
+}
+
+.formType.UnitAddition, .formType.Unblacklist {
+    background-color: #28a645;
+    color: #e4e4e4;
+}
+
+.formType.UnitDemotion, .formType.Blacklist {
+    background-color: #660000;
+    color: #e4e4e4;
+}
+
+.formType.UnitPromotion {
+    background-color: #4c1031;
+    color: #e4e4e4;
+}
+
+.formType.BlacklistForm {
+    background-color: #222222;
+    color: #e4e4e4;
+}
+
+.formType.Application {
+    background-color: #351d74;
+    color: #e4e4e4;
+}
+
+.formType.Training, .formType.PoliceProficiencyCourse, .formType.PoliceProficiencyCourseExam, .formType.PoliceProficiencyCoursePractical {
+    background-color: #674ea6;
+    color: #e4e4e4;
+}
+
+.formType.FieldAssessment {
+    background-color: #3c77d8;
+    color: #e4e4e4;
+}
+
+.formType.Reinvite, .formType.ArchiveRemoval {
+    background-color: #e69138;
+    color: #e4e4e4;
+}
+
+.formType.PoliceHoliday {
+    background-color: #6fa7dc;
+    color: #e4e4e4;
+}
+
+
+.slidecontainer {
+    width: 100%;
+}
+  
+.slider {
+    -webkit-appearance: none; 
+    appearance: none;
+    width: 100%;
+    height: 25px;
+    background: #d3d3d3;
+    outline: none;
+    opacity: 0.7;
+    -webkit-transition: .2s;
+    transition: opacity .2s;
+    border-radius: 5px;
+}
+
+.slider:hover {
+    opacity: 1;
+}
+
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 25px;
+    height: 25px;
+    background: #191919;
+    cursor: pointer;
+}
+
+.slider::-moz-range-thumb {
+    width: 25px;
+    height: 25px;
+    background: #191919;
+    cursor: pointer;
+}
+
+.score.green {
+    background-color: #6aa74f;
+    color: #e4e4e4;
+}
+.score.orange {
+    background-color: #e69138;
+    color: #e4e4e4;
+}
+.score.red {
+    background-color: #cc0000;
+    color: #e4e4e4;
+}
+
+.score.green {
+    background-color: #6aa74f;
+    color: #e4e4e4;
+}
+.score.orange {
+    background-color: #e69138;
+    color: #e4e4e4;
+}
+.score.red {
+    background-color: #cc0000;
+    color: #e4e4e4;
+}

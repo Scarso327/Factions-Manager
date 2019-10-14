@@ -1,0 +1,11 @@
+.stats {
+    margin-bottom: 20px;
+}
+
+.stats .general-stats {
+    display: flex;
+}
+
+.stats .stats-table {
+    margin: 2px;
+}

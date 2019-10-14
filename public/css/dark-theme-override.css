@@ -1,0 +1,110 @@
+body {
+    color: #8a8d93;
+    background-color: #282828;
+}
+
+select, input {
+    color: #e4e4e4 !important;
+    background-color: #333333;
+    border: 0 !important;
+}
+
+textarea {
+    color: #e4e4e4;
+    background-color: inherit;
+    border: 1px solid #555555;
+}
+
+.search input {
+    color: #e4e4e4;
+    border: 1px solid #555555 !important;
+}
+
+.breadcrumbs select {
+    background-color: #282828;
+}
+
+.theme-toggle.active .fas {
+    color: #A30000;
+}
+
+.overview {
+    border-top: 1px solid #555555 !important;
+    border-bottom: 1px solid #555555 !important;
+}
+
+.breadcrumbs a {
+    color: #8c8e84;
+}
+
+.breadcrumbs select {
+    color: #8c8e84 !important;
+    background-color: #282828;
+}
+
+.search {
+    border-bottom: 0;
+}
+
+.search input {
+    border: 1px solid #555555;
+    background-color: inherit;
+    color: #e4e4e4;
+}
+
+.roster {
+    margin-top: 0;
+}
+
+.roster table {
+    border: 1px solid #555555;
+}
+
+.roster table td {
+    border-bottom: 1px solid #555555;
+}
+
+.roster table th, .roster table td.status {
+    color: #CCCDCF;
+}
+
+.status.Active {
+    background-color: #436932;
+}
+
+.status.Inactive {
+    background-color: #A30000;
+}
+
+.roster table td.stats {
+    background-color: #28a645;
+}
+
+.info-box p {
+    color: #e4e4e4;
+}
+
+.form input, .form select {
+    background-color: inherit;
+    border: 1px solid #555555 !important;
+}
+
+.form select option {
+    background-color: #282828;
+    color: #e4e4e4;
+}
+
+.modal .modal-body {
+    background-color: #282828;
+}
+
+.inner-button.active {
+    color: white;
+    background-color: #282828;
+    border-color:#15171A #15171A #282828;
+}
+
+.inner-header {
+    border-bottom: 1px solid #15171A;
+    background-color: #282828;
+}

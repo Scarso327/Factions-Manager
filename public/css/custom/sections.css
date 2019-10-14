@@ -1,0 +1,82 @@
+.station-button {
+    padding: 5px;
+    color: #8c8e84;
+}
+
+.station-button.active {
+    color: white;
+    background-color: #71686e;
+}
+
+.roster .orange {
+    background-color: #e69138;
+    color: #e4e4e4;
+}
+
+.roster .dark-orange {
+    background-color: #b45e06;
+    color: #e4e4e4;
+}
+
+.roster .red {
+    background-color: #cc0000;
+    color: #e4e4e4;
+}
+
+.roster .dark-red {
+    background-color: #660000;
+    color: #e4e4e4;
+}
+
+.roster .black {
+    background-color: #000000;
+    color: #e4e4e4;
+}
+
+table td.today {
+    background-color: #b45e06;
+    color: #e4e4e4;
+}
+
+table td.passedDate {
+    background-color: #990000;
+    color: #e4e4e4;
+}
+
+.inline-dropdown {
+    padding: 0;
+    width: fit-content;
+    margin-bottom: 0;
+}
+
+.voting-button {
+    color: black;
+    padding: 0;
+    margin: 0;
+    height: auto;
+}
+
+.voting-button.up:hover .far.fa-thumbs-up:before, .voting-button.up.active .far.fa-thumbs-up:before {
+    font-weight: 900;
+    color: green;
+}
+
+.voting-button.down:hover .far.fa-thumbs-down:before, .voting-button.down.active .far.fa-thumbs-down:before {
+    font-weight: 900;
+    color: red;
+}
+
+.voting-button.down.active:hover .far.fa-thumbs-down:before, .voting-button.up.active:hover .far.fa-thumbs-up:before {
+    font-weight: 900;
+    color: black;
+}
+
+.roster table td.Promote, .roster table td.Unblock {
+    background-color: #6aa74f;
+    color: #e4e4e4;
+}
+
+.roster table td.Nothing, .roster table td.Block, .roster table td.Blocked {
+    background-color: #cc0000;
+    color: #e4e4e4;
+}
