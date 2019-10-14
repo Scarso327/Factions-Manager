@@ -21,6 +21,11 @@ class Actions {
             ':rank' => $rank
         ));
 
+        $rank = (Application::getRanks($faction)[$rank])->level;
+
+        API::$internal = true;
+        API::whitelist($faction, $steamid, "main", $rank);
+
         if ($query->rowCount() == 1) {
             return true;
         }
