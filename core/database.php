@@ -21,8 +21,8 @@ class Database
             $options = array(PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_OBJ, PDO::ATTR_ERRMODE => PDO::ERRMODE_WARNING);
             $this->database = new PDO(DB_TYPE . ':host=' . $host[0] . ';dbname=' . $dbname . ';charset=' . DB_CHARSET, $host[1], $host[2], $options);
         } catch (PDOException $e) {
-            if ($isAPI) {
-                new DisplayError("#Fe004", true);
+            if (!$isAPI) {
+                Controller::buildPage(array(ROOT . 'views/system/db_fail'));
                 die();
             } else {
                 return false;
