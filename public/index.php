@@ -28,7 +28,7 @@ define('DB_USER_LIFE', SETTING["db-user"][0]);
 define('DB_PASS_LIFE', SETTING["db-pass"][0]);
 
 // Other Settings
-define('VER', '2.0.0');
+define('VER', '1.0.0');
 define('API_VER', '1.0.0');
 
 define('EXT_API_KEY', 'drv6hVTTkKNtDS9y8RtUsP8jAgm9YqcVDUGrN3gFuqsdYDvKrDYfktkU4wM9C9n5');
