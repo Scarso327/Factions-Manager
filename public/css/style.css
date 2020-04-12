@@ -2,7 +2,7 @@ body {
     margin: 0;
     font-family: "Whitney", Helvetica Neue, Helvetica, Arial, Lucida Grande, sans-serif; /* These looked nice when using preview websites */
     color: black;
-    background-color: white;
+    background-color: #f6f6f6;
 }
 
 a {
