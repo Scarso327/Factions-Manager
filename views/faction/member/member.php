@@ -35,7 +35,7 @@
             <?php
             if (SETTING["forums-url"] != "") {
                 ?>
-                 <a href="<?=SETTING["stats-url"].$this->member->forumid;?>-<?=$this->member->name;?>/" target="_blank" style="background-color: #007aff;">Forum Profile</a>
+                 <a href="<?=SETTING["forums-url"].$this->member->forumid;?>-<?=$this->member->name;?>/" target="_blank" style="background-color: #007aff;">Forum Profile</a>
                 <?php
             }
             ?>
