@@ -171,7 +171,7 @@ class Faction extends Controller {
             "sections" => Application::getSections(self::$var)
         );
         
-        Controller::$subPage = "Statistics";
+        Controller::$subPage = "Stats";
         Controller::addCrumb(array("Statistics", self::$var."/stats/"));
         Controller::buildPage(array(ROOT . 'views/navbar', ROOT . 'views/stats/stats'), $params);
     }
