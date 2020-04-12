@@ -70,6 +70,11 @@ class Forms {
     }
 
     public function onFormSubmit ($form, $fields) {
+        if (!Form::canSubmitForm($form->id)) {
+            new DisplayError("#Fe007");
+            exit;
+        }
+        
         $faction = $form->faction;
 
         if ($faction == "") {
@@ -136,7 +141,16 @@ class Forms {
         }
 
         if ($form->submitLog == 1) {
-            if (!Logs::log($faction, $fieldsArr, Account::$steamid, $form->action, $form->status)) {
+            $level = (Form::getLowestRankWithAccess($form->id));
+
+            // If $level is true then we'll use the lowest rank, if not use our current level...
+            if ($level) {
+                $level = $level->level;
+            } else {
+                $level = (Application::getRanks(Faction::$var)[Faction::$officer->mainlevel])->level;
+            }
+
+            if (!Logs::log($faction, $fieldsArr, Account::$steamid, $form->action, $form->status, $level)) {
                 new DisplayError("#500");
                 exit;
             }

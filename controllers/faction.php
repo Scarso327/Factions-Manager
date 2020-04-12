@@ -32,9 +32,19 @@ class Faction extends Controller {
         $archiveValue = 0;
 
         if ($archive) {
+            if (!System::canAccessPage((Application::$factions[self::$var]["archivePage"]))) {
+                new DisplayError("#403");
+                exit;
+            };
+
             Controller::$subPage = "Archive";
             $archiveValue = 1;
         } else {
+            if (!System::canAccessPage((Application::$factions[self::$var]["dbPage"])) && ($steamid != Account::$steamid)) {
+                Header("Location: ".URL.self::$var."/".Account::$steamid);
+                exit;
+            };
+
             Controller::$subPage = View::getLanguage(self::$var, "-db-short-title");
         }
 
@@ -116,6 +126,11 @@ class Faction extends Controller {
             exit;
         }
 
+        if (!Form::canSubmitForm($form->id)) {
+            new DisplayError("#Fe007");
+            exit;
+        }
+
         if ($form->predefinedSteamid == 1 && !$submitted) {
             if (!Steam::isSteamID($formInfo[2])) {
                 new DisplayError("#Fe020");
@@ -144,6 +159,11 @@ class Faction extends Controller {
     }
 
     public function stats() {
+        if (!System::canAccessPage((Application::$factions[self::$var]["statsPage"]))) {
+            new DisplayError("#403");
+            exit;
+        };
+
         $params = array (
             "css" => array (
                 'custom/stats.css'
@@ -157,6 +177,11 @@ class Faction extends Controller {
     }
 
     public function search() {
+        if (!System::canAccessPage((Application::$factions[self::$var]["searchPage"]))) {
+            new DisplayError("#403");
+            exit;
+        };
+
         $steamid = "";
 
         if (isset($_GET['steamid'])) {

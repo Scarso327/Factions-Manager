@@ -14,7 +14,8 @@ class Powers {
             if (
                 ($power->suspended == $target->isSuspended || $power->suspended == 2) && 
                 ($power->archived == $target->isArchive || $power->archived == 2) &&
-                ($power->blacklisted == $target->isBlacklisted || $power->blacklisted == 2)
+                ($power->blacklisted == $target->isBlacklisted || $power->blacklisted == 2) &&
+                (Form::canSubmitForm($power->form))
                ) {
                 array_push($return, $power);
             }

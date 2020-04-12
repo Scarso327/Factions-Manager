@@ -5,7 +5,7 @@ class Logs {
     /*
     ** Creates a new "log" or "Form" as they were known before v2
     */
-    public function log ($faction, $fields, $actioner, $action, $status) {
+    public function log ($faction, $fields, $actioner, $action, $status, $level) {
         $member = $fields["steamid"]["value"];
 
         if ($faction == "" || $member == "" || $actioner == "" || $action == "" || $status == "" || !Factions::getMember($faction, $member)) {
@@ -15,7 +15,7 @@ class Logs {
         $db = Database::getFactory()->getConnection(DB_NAME);
 
         $query = $db->prepare(
-            "INSERT INTO logs (faction, member, actioner, `action`, `status`) VALUES (:faction, :member, :actioner, :action, :status)"
+            "INSERT INTO logs (faction, member, actioner, `action`, `status`, `level`) VALUES (:faction, :member, :actioner, :action, :status, :level)"
         );
         
         $query->execute(array(
@@ -23,7 +23,8 @@ class Logs {
             ':member' => $member, 
             ':actioner' => $actioner,
             ':action' => $action,
-            ':status' => $status
+            ':status' => $status,
+            ':level' => $level
         ));
 
         if ($query->rowCount() == 1) {

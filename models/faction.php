@@ -77,6 +77,8 @@ class Factions {
         return $return;
     }
 
+    public function orderRanks($rank1, $rank2) { return $rank1->level < $rank1->level; }
+
     public function orderMembers($faction, $member1, $member2) {
         $ranks = Application::getRanks($faction);
 

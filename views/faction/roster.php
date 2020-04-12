@@ -30,7 +30,7 @@
         if (!$this->archive && !$this->public) {
             $form = Form::getForm($faction, (Application::$factions[$faction]["addFormID"]));
 
-            if ($form) {
+            if ($form && (Form::canSubmitForm($form->id))) {
                 ?>
                 <div class = "button-list">
                     <a class = "button" href="<?=URL.$faction?>/form/<?=$form->id;?>-<?=$form->name;?>">Add Member</a>
