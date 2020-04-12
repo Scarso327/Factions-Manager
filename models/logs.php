@@ -66,8 +66,13 @@ class Logs {
             $dates = array(date('Y-m-d', strtotime('-1 week')), date('Y-m-d'));
         }
 
-        $query = Database::getFactory()->getConnection(DB_NAME)->prepare("SELECT * FROM logs WHERE faction = :faction AND ".$target." = :member AND (DATE(timestamp) > :start AND DATE(timestamp) <= :end) AND hidden = 0");
-        $query->execute(array(":faction" => $faction, ":member" => $steamid, ":start" => $dates[0], ":end" => $dates[1]));
+        $query = Database::getFactory()->getConnection(DB_NAME)->prepare("SELECT * FROM logs WHERE faction = :faction AND ".$target." = :member AND (DATE(timestamp) > :start AND DATE(timestamp) <= :end) AND level <= :level AND hidden = 0");
+        $query->execute(array(
+            ":faction" => $faction, 
+            ":member" => $steamid, 
+            ":start" => $dates[0], ":end" => $dates[1], 
+            ":level" => (Application::getRanks(Faction::$var)[Faction::$officer->mainlevel]->level)
+        ));
 
         if ($query->rowCount() == 0) { return false; }
         return $query->fetchAll();
