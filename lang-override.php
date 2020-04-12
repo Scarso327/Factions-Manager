@@ -14,6 +14,7 @@ return array(
     'actioner-member-log-title' => 'Actioned',
     'default-member-log-title' => 'Actioning',
     'apc-stats-section-title' => 'Stations / Departments',
+    'nhs-stats-section-title' => 'Hospitals / Departments',
     'default-stats-section-title' => 'Sections / Departments'
 );
 ?>
