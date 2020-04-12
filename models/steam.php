@@ -69,7 +69,7 @@ class Steam {
                 if (!(Accounts::IsUser($steamid)) && ($faction != null)) {
                     $entry = Factions::isMember($faction, $steamid);
 
-                    if (!$entry) { self::OnFailedLogin("No User?"); exit; } // What?
+                    if (!$entry) { self::OnFailedLogin("No User"); exit; } // What?
                     if (!(Accounts::createSteam($player->personaname, $steamid))) { self::OnFailedLogin("Creation Failed"); exit; } // If it fails to create then it'll become "No Access"...
                 } else {
                     if (!(Accounts::IsUser($steamid))) { self::OnFailedLogin("No Access"); exit; }

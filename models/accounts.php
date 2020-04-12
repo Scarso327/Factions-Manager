@@ -30,7 +30,7 @@ class Accounts {
     // Used to create a database entry if our steam account is not already created.
     public static function createSteam($name = null, $steamid = null) {
         if($name != null && $steamid != null) {
-            $query = Database::getFactory()->getConnection(DB_NAME)->prepare("INSERT INTO accounts (name, steamID) VALUES (:name, :steamID)");
+            $query = Database::getFactory()->getConnection(DB_NAME)->prepare("INSERT INTO accounts (`name`, steamID) VALUES (:name, :steamID)");
             $query->execute(array(':name' => $name, ':steamID' => $steamid));
             if ($query->rowCount() == 1) { return true; }
         }
