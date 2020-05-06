@@ -33,7 +33,11 @@ class View {
                     }
                 }
 
-                if (Application::$isDark) { echo "<link rel='stylesheet' href='".URL."css/dark-theme-override.css?v=".time()."' type='text/css' />"; }
+                echo "
+                <link rel='stylesheet' href='".URL."css/dark-theme-override.css?v=".time()."' type='text/css' />
+                <script src='".URL."js/app.js'></script>
+                ";
+                
 
                 if($this->java != null) {
                     foreach ($this->java as $java) {
@@ -44,7 +48,7 @@ class View {
                 }
             echo "
             </head>
-            <body>
+            <body id='main-body' "; if (Application::$isDark) { echo "class='dark'"; } echo ">
             ";
                 if(is_array($files) && (count($files) > 0)) {
                     foreach($files as $filename) { 

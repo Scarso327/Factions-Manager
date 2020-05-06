@@ -48,14 +48,4 @@ class Home extends Controller {
             }
         }
     }
-
-    public function theme () {
-        if (isset($_COOKIE['dark-theme'])) {
-            setcookie("dark-theme", null, -1, "/");
-        } else {
-            setcookie("dark-theme", true, time() + (10 * 365 * 24 * 60 * 60), "/");
-        }
-        
-        header("Location: ".URL);
-    }
 }

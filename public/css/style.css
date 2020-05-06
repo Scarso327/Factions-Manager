@@ -403,6 +403,10 @@ button, .breadcrumbs.buttons a.button {
     color: #e4e4e4;
 }
 
+.theme-toggle:hover {
+    cursor: pointer;
+}
+
 .theme-toggle.active .fas {
     color: #6aa74f;
 }

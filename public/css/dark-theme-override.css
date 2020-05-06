@@ -1,110 +1,110 @@
-body {
+body.dark {
     color: #8a8d93;
     background-color: #282828;
 }
 
-select, input {
+body.dark select, body.dark input {
     color: #e4e4e4 !important;
     background-color: #333333;
     border: 0 !important;
 }
 
-textarea {
+body.dark textarea {
     color: #e4e4e4;
     background-color: inherit;
     border: 1px solid #555555;
 }
 
-.search input {
+body.dark .search input {
     color: #e4e4e4;
     border: 1px solid #555555 !important;
 }
 
-.breadcrumbs select {
+body.dark .breadcrumbs select {
     background-color: #282828;
 }
 
-.theme-toggle.active .fas {
+body.dark .theme-toggle.active .fas {
     color: #A30000;
 }
 
-.overview {
+body.dark .overview {
     border-top: 1px solid #555555 !important;
     border-bottom: 1px solid #555555 !important;
 }
 
-.breadcrumbs a {
+body.dark .breadcrumbs a {
     color: #8c8e84;
 }
 
-.breadcrumbs select {
+body.dark .breadcrumbs select {
     color: #8c8e84 !important;
     background-color: #282828;
 }
 
-.search {
+body.dark .search {
     border-bottom: 0;
 }
 
-.search input {
+body.dark .search input {
     border: 1px solid #555555;
     background-color: inherit;
     color: #e4e4e4;
 }
 
-.roster {
+body.dark .roster {
     margin-top: 0;
 }
 
-.roster table {
+body.dark .roster table {
     border: 1px solid #555555;
 }
 
-.roster table td {
+body.dark .roster table td {
     border-bottom: 1px solid #555555;
 }
 
-.roster table th, .roster table td.status {
+body.dark .roster table th, body.dark .roster table td.status {
     color: #CCCDCF;
 }
 
-.status.Active {
+body.dark .status.Active {
     background-color: #436932;
 }
 
-.status.Inactive {
+body.dark .status.Inactive {
     background-color: #A30000;
 }
 
-.roster table td.stats {
+body.dark .roster table td.stats {
     background-color: #28a645;
 }
 
-.info-box p {
+body.dark .info-box p {
     color: #e4e4e4;
 }
 
-.form input, .form select {
+body.dark .form input, body.dark .form select {
     background-color: inherit;
     border: 1px solid #555555 !important;
 }
 
-.form select option {
+body.dark .form select option {
     background-color: #282828;
     color: #e4e4e4;
 }
 
-.modal .modal-body {
+body.dark .modal .modal-body {
     background-color: #282828;
 }
 
-.inner-button.active {
+body.dark .inner-button.active {
     color: white;
     background-color: #282828;
     border-color:#15171A #15171A #282828;
 }
 
-.inner-header {
+body.dark .inner-header {
     border-bottom: 1px solid #15171A;
     background-color: #282828;
 }

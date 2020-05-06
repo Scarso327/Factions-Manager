@@ -88,7 +88,17 @@ class API extends Controller {
 
         if (self::$internal) { return true; }
         self::return(array("result" => "success", "responses" => array("steamid" => $steamid, "column" => $type, "level" => $level)));
-        exit;
+    }
+    
+    public function toggleTheme () {
+        if (isset($_COOKIE['dark-theme'])) {
+            setcookie("dark-theme", null, -1, "/");
+        } else {
+            setcookie("dark-theme", true, time() + (10 * 365 * 24 * 60 * 60), "/");
+        }
+
+        if (self::$internal) { return true; } // Wtf...
+        self::return(array("result" => "success"));
     }
 
     private function auth ($faction) {
