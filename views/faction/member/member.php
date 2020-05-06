@@ -4,7 +4,7 @@
             <?=Controller::buildCrumbs();?>
         </div>
         <div class = "info-box">
-            <p><span title="Join Date"><?=date('d/m/Y', strtotime($this->member->joindate));?></span> / <span title="Last Promotion Date"><?=date('d/m/Y', strtotime($this->member->last_promotion));?></span> / <span title="Last Login Date"><?=date('d/m/Y H:i:s', strtotime($this->member->last_login));?></span></p>
+            <p><span title="Join Date"><?=date('d/m/Y', strtotime($this->member->joindate));?></span> / <span title="Last Rank Change"><?=date('d/m/Y', strtotime($this->member->last_rank_change));?></span> / <span title="Last Login Date"><?=date('d/m/Y H:i:s', strtotime($this->member->last_login));?></span></p>
         </div>
     </section>
     <section class = "overview">

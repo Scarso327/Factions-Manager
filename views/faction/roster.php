@@ -64,7 +64,7 @@
                 <th>Steam ID</th>
                 <th>Status</th>
                 <th>Join Date</th>
-                <th>Promotion Date</th>
+                <th title="Date of Last Promotion / Demotion">Rank Date</th>
                 <?php
                 if (!$this->public || SETTING["forums-url"] != "") {
                     ?>
@@ -93,7 +93,7 @@
                         <td><?=$member->steamid;?></td>
                         <td class = "status <?=$activity?>" title="<?=date('d/m/Y H:i:s', strtotime($member->last_login));?>"><?=$activity?></td>
                         <td><?=date("d/m/Y", strtotime($member->joindate))?></td>
-                        <td><?=date("d/m/Y", strtotime($member->last_promotion))?></td>
+                        <td><?=date("d/m/Y", strtotime($member->last_rank_change))?></td>
                         <?php
                         if (SETTING["stats-url"] != "") {
                             ?>

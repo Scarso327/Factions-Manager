@@ -88,7 +88,7 @@ class Factions {
         if ($m1Rank != $m2Rank) {
             return $m1Rank < $m2Rank;
         } else {
-            return strtotime($member1->last_promotion) > strtotime($member2->last_promotion);
+            return strtotime($member1->last_rank_change) > strtotime($member2->last_rank_change);
         }
     }
 }

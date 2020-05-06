@@ -199,14 +199,14 @@ CREATE TABLE IF NOT EXISTS `members` (
   `isArchive` int(11) NOT NULL DEFAULT '0',
   `isBlocked` int(11) NOT NULL DEFAULT '0',
   `joindate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `last_promotion` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `last_rank_change` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `last_login` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
 -- Dumping data for table factions_manager.members: ~12 rows (approximately)
 /*!40000 ALTER TABLE `members` DISABLE KEYS */;
-INSERT INTO `members` (`id`, `faction`, `name`, `steamid`, `forumid`, `section`, `mainlevel`, `isSuspended`, `isBlacklisted`, `isLOA`, `isHoliday`, `isArchive`, `isBlocked`, `joindate`, `last_promotion`, `last_login`) VALUES
+INSERT INTO `members` (`id`, `faction`, `name`, `steamid`, `forumid`, `section`, `mainlevel`, `isSuspended`, `isBlacklisted`, `isLOA`, `isHoliday`, `isArchive`, `isBlocked`, `joindate`, `last_rank_change`, `last_login`) VALUES
 	(1, 'apc', 'EXAMPLE USER', 'EXAMPLE USER', '4818', 'Command', 14, 0, 0, 0, 0, 0, 0, '2019-09-07 17:07:20', '2019-09-07 17:07:20', '2019-09-28 21:40:28'),
 	(2, 'nhs', 'EXAMPLE USER', 'EXAMPLE USER', '4818', 'NHS Command', 23, 0, 0, 0, 0, 0, 0, '2019-09-07 17:07:20', '2019-09-07 17:07:20', '2019-09-28 21:40:28');
 /*!40000 ALTER TABLE `members` ENABLE KEYS */;
