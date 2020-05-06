@@ -44,7 +44,7 @@ class Member {
     }
 
     public function changeLevel($faction, $steamid, $newRank) {
-        $query = Database::getFactory()->getConnection(DB_NAME)->prepare("UPDATE members SET mainlevel = :rank, last_promotion = CURRENT_TIMESTAMP() WHERE faction = :faction AND steamid = :steamid LIMIT 1");
+        $query = Database::getFactory()->getConnection(DB_NAME)->prepare("UPDATE members SET mainlevel = :rank, last_rank_change = CURRENT_TIMESTAMP() WHERE faction = :faction AND steamid = :steamid LIMIT 1");
         $query->execute(array(
             ':rank' => $newRank,
             ':faction' => $faction,
