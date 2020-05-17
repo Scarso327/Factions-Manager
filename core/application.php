@@ -93,7 +93,10 @@ class Application {
     public function actionHandle () {
         if($this->action) {
             if (Steam::isSteamID($this->action)) {
-                $this->controller->index($this->action);
+                $subpage = "";
+                if (array_key_exists(0, $this->params)) { $subpage = $this->params[0]; }
+
+                $this->controller->index($this->action, $subpage);
             } else {
                 if(method_exists($this->controller, $this->action)) {
                     if (!empty($this->params)) {

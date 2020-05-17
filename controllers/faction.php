@@ -25,10 +25,10 @@ class Faction extends Controller {
         Controller::addCrumb(array(Controller::$currentPage, ($faction."/")));
     }
 
-    public function index ($steamid = null) { self::database($steamid, false); }
-    public function archive ($steamid = null) { self::database($steamid, true); }
+    public function index ($steamid = null, $subpage = "") { self::database($steamid, $subpage, false); }
+    public function archive ($steamid = null, $subpage = "") { self::database($steamid, $subpage, true); }
 
-    private function database ($steamid = null, $archive = false) {
+    private function database ($steamid = null, $subpage = "", $archive = false) {
         $archiveValue = 0;
 
         if ($archive) {
@@ -62,6 +62,7 @@ class Faction extends Controller {
         } else {
             $steamid = Filter::XSSFilter($steamid); // Filter user inputs...
             $member = Factions::getMember(self::$var, $steamid);
+            $params = array ();
 
             if ($member && Factions::isMember(self::$var, $steamid, $archiveValue)) {
                 if ($member->isArchive == 1) {
@@ -81,6 +82,13 @@ class Faction extends Controller {
                         }
                     }
                 }
+                
+                // Allows us to run custom code per page
+                switch ($subpage) {
+                    case '':
+                        $params["history"] = self::getHistory($steamid);
+                        break;
+                }
 
                 Controller::addCrumb(array($member->name, self::$var."/member/".$steamid));
                 Controller::buildPage(array(ROOT . 'views/navbar', ROOT . 'views/faction/member/member'), array(
@@ -88,7 +96,8 @@ class Faction extends Controller {
                     "member" => $member,
                     "steam" => Steam::getSteamInfo($steamid),
                     "powers" => $powers,
-                    "history" => self::getHistory($steamid)
+                    "params" => $params,
+                    "subpage" => $subpage
                 ));
             } else {
                 new DisplayError("#Fe006");

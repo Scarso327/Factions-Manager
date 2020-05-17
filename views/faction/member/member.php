@@ -69,36 +69,62 @@
         }
         ?>
         <div class = "main roster">
-            <form autocomplete="off" method="GET" action="<?=URL.Faction::$var.'/'.$this->member->steamid;?>">
-                <select name="type" id = "typeDropdown">
-                    <option value="member">Forms</option>
-                    <option value="actioner">Submitted Forms</option>
-                </select>
-
-                <div style = "display: flex;">
-                    <input style = "margin-right: 5px;" type="date" id="start" name="start-time" value="<?=$this->history['dates'][0];?>" min="2016-01-01" max="<?=date('Y-m-d')?>">
-                    <input type="date" id="start" name="end-time" value="<?=$this->history['dates'][1];?>" min="2016-01-01" max="<?=date('Y-m-d')?>">
-                </div>
-
-                <button style = "width: 100%; margin: 0px;" type="submit">Search History</button>
-            </form>
-            <?php
-            if ($this->history['type'] != "Forms") {
-                ?>
-                <div id = "dropdownScript">
-                    <script>
-                        document.getElementById("typeDropdown").value = '<?=$this->history['type'];?>';
-                        var target = document.getElementById('dropdownScript');
-                        target.remove( target.childNodes[0] );
-                    </script>
-                </div>
+            <div class = "tab-buttons">
                 <?php
+                $buttons = array (
+                    array("History", ""),
+                    array("Units", "units"),
+                    array("Authorisations", "auth")
+                );
+
+                foreach ($buttons as $button) {
+                    ?>
+                    <a class="tab-button<?php if ($this->subpage == $button[1]) { ?> active<?php } ?>" href="<?=URL.Faction::$var;?>/<?=$this->member->steamid;?>/<?=$button[1];?>"><?=$button[0];?></a>
+                    <?php
+                }
+                ?>
+            </div>
+            <?php
+            $includeHistory = false;
+
+            switch ($this->subpage) {
+                case '':
+                    $includeHistory = true;
+                    ?>
+                    <form autocomplete="off" method="GET" action="<?=URL.Faction::$var.'/'.$this->member->steamid;?>">
+                        <select name="type" id = "typeDropdown">
+                            <option value="member">Forms</option>
+                            <option value="actioner">Submitted Forms</option>
+                        </select>
+
+                        <div style = "display: flex;">
+                            <input style = "margin-right: 5px;" type="date" id="start" name="start-time" value="<?=$this->params["history"]['dates'][0];?>" min="2016-01-01" max="<?=date('Y-m-d')?>">
+                            <input type="date" id="start" name="end-time" value="<?=$this->params["history"]['dates'][1];?>" min="2016-01-01" max="<?=date('Y-m-d')?>">
+                        </div>
+
+                        <button style = "width: 100%; margin: 0px;" type="submit">Search History</button>
+                    </form>
+                    <?php
+                    if ($this->params["history"]['type'] != "Forms") {
+                        ?>
+                        <div id = "dropdownScript">
+                            <script>
+                                document.getElementById("typeDropdown").value = '<?=$this->params["history"]['type'];?>';
+                                var target = document.getElementById('dropdownScript');
+                                target.remove( target.childNodes[0] );
+                            </script>
+                        </div>
+                        <?php
+                    }
+                    ?>
+                    <table id = "myFormsTable">
+                        <?php include("tables/history.php"); ?>
+                    </table>
+                    <?php
+                    break;
             }
             ?>
-            <table id = "myFormsTable">
-                <?php include("tables/history.php"); ?>
-            </table>
         </div>
     </section>
-    <?php include("histroyModal.php"); ?>
+    <?php if ($includeHistory) { include("histroyModal.php"); } ?>
 </div>

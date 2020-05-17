@@ -70,6 +70,26 @@ select, input {
     margin-top: 0;
 }
 
+.tab-buttons {
+    display: flex;
+    margin-bottom: 10px;
+    overflow: hidden;
+    border-radius: 5px;
+}
+
+.tab-buttons .tab-button {
+    display: block;
+    flex-grow: 1;
+    text-align: center;
+    padding: 15px;
+    background-color: #333333;
+}
+
+.tab-buttons .tab-button.active {
+    color: white;
+    background-color: #393939;
+}
+
 .formType.Interview {
     background-color: #4c1030;
     color: #e4e4e4;

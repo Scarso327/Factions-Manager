@@ -5,20 +5,20 @@
 <tr class = "second">   
     <!--- Details --->
     <th>Date</th>
-    <th><?=View::getLanguage($this->history['type'], "-member-log-title");?> <?=View::getLanguage(Faction::$var, "-member-title");?></th>
+    <th><?=View::getLanguage($this->params["history"]['type'], "-member-log-title");?> <?=View::getLanguage(Faction::$var, "-member-title");?></th>
     <th>Action</th>
     <th>Status</th>
     <th></th>
 </tr>
 <?php
-if ($this->history["logs"]) {
-    foreach($this->history["logs"] as $log) {
+if ($this->params["history"]["logs"]) {
+    foreach($this->params["history"]["logs"] as $log) {
         ?>
         <tr id = "log-<?=$log->id;?>">
             <td><?=date("d/m/Y", strtotime($log->timestamp))?></td>
             <td><?php 
                 $type = "actioner";
-                if ($this->history['type'] == "actioner") { $type = "member"; };
+                if ($this->params["history"]['type'] == "actioner") { $type = "member"; };
 
                 if ($log->$type == "SYSTEM") {
                     echo "SYSTEM";
