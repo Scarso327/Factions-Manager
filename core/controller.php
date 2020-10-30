@@ -23,6 +23,14 @@ class Controller {
                 setcookie("steam_id", Session::get("steamid"), time()+3600 * 24 * 365, "/");
                 setcookie("remember_token", $token, time()+3600 * 24 * 365, "/");
             }
+            
+            // Ensure that if the remember_token changes then we stop this session...
+            if (isset($_COOKIE['remember_token'])) {
+                if (!(Accounts::checkToken(Session::get("steamid"), $_COOKIE['remember_token']))) {
+                    Account::logout(true);
+                    exit;
+                }
+            }
         } else {
             // Session Revival Check...
             if (isset($_COOKIE['remember_token']) && isset($_COOKIE['steam_id'])) {
