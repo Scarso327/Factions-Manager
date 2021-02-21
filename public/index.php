@@ -15,7 +15,7 @@ define('URL_DOMAIN', $_SERVER['HTTP_HOST']);
 $url = URL_PROTOCOL . URL_DOMAIN . '/';
 
 if (SETTING["sub-directory"] != "") {
-  $url = $url . SETTING["sub-directory"]) . '/';
+  $url = $url . SETTING["sub-directory"] . '/';
 };
 
 define('URL', $url);
