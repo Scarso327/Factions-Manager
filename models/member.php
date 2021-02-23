@@ -173,7 +173,7 @@ class Member {
 
     public static function getLastSeen($steamid, $value = "lastcopseen") {
         $thisPlayer = Database::getFactory(true)->getConnection(DB_NAME_LIFE, array(DB_HOST_LIFE, DB_USER_LIFE, DB_PASS_LIFE))->prepare(
-            "SELECT playerid, ".$value." FROM players WHERE playerid = :steamid LIMIT 1"
+            "SELECT playerid, ".$value." FROM ".SETTING["db-player-table"]." WHERE playerid = :steamid LIMIT 1"
         );
         $thisPlayer->execute(array(":steamid" => $steamid));
         return $thisPlayer;

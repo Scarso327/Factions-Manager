@@ -17,6 +17,7 @@ return array(
     'db-user' => array('root','root'), // Key 0 = Life Server Database, Key 1 = Web Server Database
     'db-pass' => array('',''), // Key 0 = Life Server Database, Key 1 = Web Server Database
     'db-set' => 'utf8', // We assume you're using the same set for both databases...
+    'db-player-table' => 'players',
     // The forums url is designed to work with IPB as it puts the forumid-name in the url. If you have any other forum software you maybe required to alter code.
     'forums-url' => '', // If blank no stats links will appear Format: https://example.com/forums/profile/{forumid} (forumid will be replaced with their forumid-name...)
     'stats-url' => '', // If blank no stats links will appear Format: https://example.com/stats/{steamid} (Steamid will be replaced with their steamid...)

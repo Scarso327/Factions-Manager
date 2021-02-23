@@ -68,7 +68,7 @@ class API extends Controller {
             exit;
         }
 
-        $db = $db->prepare("UPDATE players SET ".$type." = :newlevel WHERE playerid = :steamid LIMIT 1");
+        $db = $db->prepare("UPDATE ".SETTING["db-player-table"]." SET ".$type." = :newlevel WHERE playerid = :steamid LIMIT 1");
         $db->execute(array(
             ":newlevel" => $level,
             ":steamid" => $steamid
