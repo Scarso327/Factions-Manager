@@ -1,8 +1,8 @@
 -- --------------------------------------------------------
 -- Host:                         127.0.0.1
--- Server version:               10.1.37-MariaDB - mariadb.org binary distribution
--- Server OS:                    Win32
--- HeidiSQL Version:             10.1.0.5464
+-- Server version:               10.4.17-MariaDB - mariadb.org binary distribution
+-- Server OS:                    Win64
+-- HeidiSQL Version:             11.1.0.6116
 -- --------------------------------------------------------
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -10,6 +10,7 @@
 /*!50503 SET NAMES utf8mb4 */;
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 
 -- Dumping database structure for factions_manager
@@ -22,10 +23,10 @@ CREATE TABLE IF NOT EXISTS `accounts` (
   `name` varchar(50) NOT NULL,
   `steamName` varchar(50) DEFAULT NULL,
   `steamID` varchar(32) NOT NULL,
-  `steampfp` text,
-  `steampfpmed` text,
-  `steampfplarge` text,
-  `isAdmin` int(11) NOT NULL DEFAULT '0',
+  `steampfp` text DEFAULT NULL,
+  `steampfpmed` text DEFAULT NULL,
+  `steampfplarge` text DEFAULT NULL,
+  `isAdmin` int(11) NOT NULL DEFAULT 0,
   `remember_token` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `steamid` (`steamID`),
@@ -42,17 +43,23 @@ CREATE TABLE IF NOT EXISTS `factions` (
   `sys` varchar(3) NOT NULL,
   `name` varchar(50) NOT NULL,
   `rank` varchar(50) NOT NULL,
+  `logoFile` varchar(50) NOT NULL,
   `lastlogin` varchar(50) NOT NULL,
   `defaultRank` int(11) NOT NULL,
-  `additionForm` int(11) NOT NULL DEFAULT '-1',
-  PRIMARY KEY (`id`)
+  `additionForm` int(11) NOT NULL DEFAULT -1,
+  `dbPage` int(11) NOT NULL DEFAULT -1,
+  `archivePage` int(11) NOT NULL DEFAULT -1,
+  `searchPage` int(11) NOT NULL DEFAULT -1,
+  `statsPage` int(11) NOT NULL DEFAULT -1,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `sys` (`sys`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
 -- Dumping data for table factions_manager.factions: ~3 rows (approximately)
 /*!40000 ALTER TABLE `factions` DISABLE KEYS */;
-INSERT INTO `factions` (`id`, `sys`, `name`, `rank`, `lastlogin`, `defaultRank`, `additionForm`) VALUES
-	(1, 'apc', 'Altis Police', 'coplevel', 'lastcopseen', 1, 1),
-	(2, 'nhs', 'National Health Service', 'nhslevel', 'lastnhsseen', 16, 1);
+INSERT INTO `factions` (`id`, `sys`, `name`, `rank`, `logoFile`, `lastlogin`, `defaultRank`, `additionForm`, `dbPage`, `archivePage`, `searchPage`, `statsPage`) VALUES
+	(1, 'apc', 'Altis Police', 'coplevel', 'apc.png', 'lastcopseen', 1, 1, 1, 3, 5, 7),
+	(2, 'nhs', 'National Health Service', 'nhslevel', 'nhs.png', 'lastnhsseen', 16, 1, 2, 4, 6, 8);
 /*!40000 ALTER TABLE `factions` ENABLE KEYS */;
 
 -- Dumping structure for table factions_manager.fields
@@ -65,13 +72,13 @@ CREATE TABLE IF NOT EXISTS `fields` (
   `type` enum('Input','Textarea','factionRanks','factionMembers','factionSections','memberRanks','memberSections','memberRanksAbove','memberRanksBelow') NOT NULL,
   `conditions` text NOT NULL,
   `default` varchar(100) NOT NULL DEFAULT '',
-  `required` int(11) NOT NULL DEFAULT '0',
-  `hidden` int(11) NOT NULL DEFAULT '0',
-  `system` int(11) NOT NULL DEFAULT '0',
+  `required` int(11) NOT NULL DEFAULT 0,
+  `hidden` int(11) NOT NULL DEFAULT 0,
+  `system` int(11) NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=latin1;
 
--- Dumping data for table factions_manager.fields: ~35 rows (approximately)
+-- Dumping data for table factions_manager.fields: ~37 rows (approximately)
 /*!40000 ALTER TABLE `fields` DISABLE KEYS */;
 INSERT INTO `fields` (`id`, `form`, `fieldName`, `name`, `description`, `type`, `conditions`, `default`, `required`, `hidden`, `system`) VALUES
 	(1, 1, 'username', 'Member\'s Name', 'This should be the name this faction member uses while in-game.', 'Input', 'placeholder="Name..."', '', 1, 0, 1),
@@ -124,11 +131,11 @@ CREATE TABLE IF NOT EXISTS `forms` (
   `action` varchar(50) NOT NULL,
   `status` varchar(50) NOT NULL,
   `customFunction` varchar(50) NOT NULL,
-  `modal` int(11) NOT NULL DEFAULT '0',
-  `submitLog` int(11) NOT NULL DEFAULT '0',
-  `predefinedSteamid` int(11) NOT NULL DEFAULT '0',
-  `active` int(11) NOT NULL DEFAULT '0',
-  `system` int(11) NOT NULL DEFAULT '0',
+  `modal` int(11) NOT NULL DEFAULT 0,
+  `submitLog` int(11) NOT NULL DEFAULT 0,
+  `predefinedSteamid` int(11) NOT NULL DEFAULT 0,
+  `active` int(11) NOT NULL DEFAULT 0,
+  `system` int(11) NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=latin1;
 
@@ -150,22 +157,6 @@ INSERT INTO `forms` (`id`, `faction`, `name`, `description`, `return`, `method`,
 	(13, '', 'Unarchival Form', 'Allows you to readd this member back to the faction.', '{{steamid}}', 'POST', '	Archive Removal', 'Completed', 'unarchive', 1, 1, 1, 1, 1);
 /*!40000 ALTER TABLE `forms` ENABLE KEYS */;
 
--- Dumping structure for table factions_manager.levels
-CREATE TABLE IF NOT EXISTS `levels` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `faction` varchar(3) NOT NULL,
-  `type` enum('Access Level','Power Level') NOT NULL,
-  `name` varchar(50) NOT NULL,
-  `level` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
-
--- Dumping data for table factions_manager.levels: ~0 rows (approximately)
-/*!40000 ALTER TABLE `levels` DISABLE KEYS */;
-INSERT INTO `levels` (`id`, `faction`, `type`, `name`, `level`) VALUES
-	(1, 'apc', 'Power Level', 'Bronze Command', 1);
-/*!40000 ALTER TABLE `levels` ENABLE KEYS */;
-
 -- Dumping structure for table factions_manager.logs
 CREATE TABLE IF NOT EXISTS `logs` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -174,8 +165,9 @@ CREATE TABLE IF NOT EXISTS `logs` (
   `actioner` varchar(50) NOT NULL,
   `action` varchar(50) NOT NULL,
   `status` varchar(50) NOT NULL,
-  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `hidden` int(11) NOT NULL DEFAULT '0',
+  `timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
+  `level` int(11) NOT NULL DEFAULT 0,
+  `hidden` int(11) NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -191,24 +183,24 @@ CREATE TABLE IF NOT EXISTS `members` (
   `steamid` varchar(32) NOT NULL,
   `forumid` varchar(4) NOT NULL,
   `section` varchar(50) DEFAULT NULL,
-  `mainlevel` int(11) NOT NULL DEFAULT '1',
-  `isSuspended` int(11) NOT NULL DEFAULT '0',
-  `isBlacklisted` int(11) NOT NULL DEFAULT '0',
-  `isLOA` int(11) NOT NULL DEFAULT '0',
-  `isHoliday` int(11) NOT NULL DEFAULT '0',
-  `isArchive` int(11) NOT NULL DEFAULT '0',
-  `isBlocked` int(11) NOT NULL DEFAULT '0',
-  `joindate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `last_rank_change` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `last_login` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `mainlevel` int(11) NOT NULL DEFAULT 1,
+  `isSuspended` int(11) NOT NULL DEFAULT 0,
+  `isBlacklisted` int(11) NOT NULL DEFAULT 0,
+  `isLOA` int(11) NOT NULL DEFAULT 0,
+  `isHoliday` int(11) NOT NULL DEFAULT 0,
+  `isArchive` int(11) NOT NULL DEFAULT 0,
+  `isBlocked` int(11) NOT NULL DEFAULT 0,
+  `joindate` timestamp NOT NULL DEFAULT current_timestamp(),
+  `last_rank_change` timestamp NOT NULL DEFAULT current_timestamp(),
+  `last_login` timestamp NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
--- Dumping data for table factions_manager.members: ~12 rows (approximately)
+-- Dumping data for table factions_manager.members: ~2 rows (approximately)
 /*!40000 ALTER TABLE `members` DISABLE KEYS */;
 INSERT INTO `members` (`id`, `faction`, `name`, `steamid`, `forumid`, `section`, `mainlevel`, `isSuspended`, `isBlacklisted`, `isLOA`, `isHoliday`, `isArchive`, `isBlocked`, `joindate`, `last_rank_change`, `last_login`) VALUES
-	(1, 'apc', 'EXAMPLE USER', 'EXAMPLE USER', '4818', 'Command', 14, 0, 0, 0, 0, 0, 0, '2019-09-07 17:07:20', '2019-09-07 17:07:20', '2019-09-28 21:40:28'),
-	(2, 'nhs', 'EXAMPLE USER', 'EXAMPLE USER', '4818', 'NHS Command', 23, 0, 0, 0, 0, 0, 0, '2019-09-07 17:07:20', '2019-09-07 17:07:20', '2019-09-28 21:40:28');
+	(1, 'apc', 'Username', 'Steamid', 'IPS_', 'Command', 13, 0, 0, 0, 0, 0, 0, '2019-09-07 17:07:20', '2019-09-07 17:07:20', '2021-02-23 14:48:33'),
+	(2, 'nhs', 'Username', 'Steamid', 'IPS_', 'NHS Command', 22, 0, 0, 0, 0, 0, 0, '2019-09-07 17:07:20', '2019-09-07 17:07:20', '2021-02-23 14:48:34');
 /*!40000 ALTER TABLE `members` ENABLE KEYS */;
 
 -- Dumping structure for table factions_manager.powers
@@ -218,11 +210,11 @@ CREATE TABLE IF NOT EXISTS `powers` (
   `name` varchar(50) NOT NULL,
   `form` int(11) NOT NULL,
   `colour` varchar(50) NOT NULL DEFAULT '28a645',
-  `suspended` int(11) NOT NULL DEFAULT '0',
-  `archived` int(11) NOT NULL DEFAULT '0',
-  `blacklisted` int(11) NOT NULL DEFAULT '0',
-  `system` int(11) NOT NULL DEFAULT '0',
-  `active` int(11) NOT NULL DEFAULT '1',
+  `suspended` int(11) NOT NULL DEFAULT 0,
+  `archived` int(11) NOT NULL DEFAULT 0,
+  `blacklisted` int(11) NOT NULL DEFAULT 0,
+  `system` int(11) NOT NULL DEFAULT 0,
+  `active` int(11) NOT NULL DEFAULT 1,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
 
@@ -249,37 +241,57 @@ CREATE TABLE IF NOT EXISTS `ranks` (
   `faction` varchar(3) NOT NULL,
   `sName` varchar(5) NOT NULL,
   `name` varchar(50) NOT NULL,
-  `level` int(11) NOT NULL DEFAULT '0',
-  `system` int(11) NOT NULL DEFAULT '0',
+  `level` int(11) NOT NULL DEFAULT 0,
+  `form_submit_1` int(11) NOT NULL DEFAULT 0,
+  `form_submit_2` int(11) NOT NULL DEFAULT 0,
+  `form_submit_3` int(11) NOT NULL DEFAULT 0,
+  `form_submit_4` int(11) NOT NULL DEFAULT 0,
+  `form_submit_5` int(11) NOT NULL DEFAULT 0,
+  `form_submit_6` int(11) NOT NULL DEFAULT 0,
+  `form_submit_7` int(11) NOT NULL DEFAULT 0,
+  `form_submit_8` int(11) NOT NULL DEFAULT 0,
+  `form_submit_9` int(11) NOT NULL DEFAULT 0,
+  `form_submit_10` int(11) NOT NULL DEFAULT 0,
+  `form_submit_11` int(11) NOT NULL DEFAULT 0,
+  `form_submit_12` int(11) NOT NULL DEFAULT 0,
+  `form_submit_13` int(11) NOT NULL DEFAULT 0,
+  `page_access_1` int(11) NOT NULL DEFAULT 0,
+  `page_access_2` int(11) NOT NULL DEFAULT 0,
+  `page_access_3` int(11) NOT NULL DEFAULT 0,
+  `page_access_4` int(11) NOT NULL DEFAULT 0,
+  `page_access_5` int(11) NOT NULL DEFAULT 0,
+  `page_access_6` int(11) NOT NULL DEFAULT 0,
+  `page_access_7` int(11) NOT NULL DEFAULT 0,
+  `page_access_8` int(11) NOT NULL DEFAULT 0,
+  `system` int(11) NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=latin1;
 
--- Dumping data for table factions_manager.ranks: ~23 rows (approximately)
+-- Dumping data for table factions_manager.ranks: ~22 rows (approximately)
 /*!40000 ALTER TABLE `ranks` DISABLE KEYS */;
-INSERT INTO `ranks` (`id`, `faction`, `sName`, `name`, `level`, `system`) VALUES
-	(1, 'apc', 'N/A', 'N/A', 0, 1),
-	(2, 'apc', 'CSO', 'Community Support Officer', 1, 0),
-	(3, 'apc', 'PCSO', 'Police Community Support Officer', 2, 0),
-	(4, 'apc', 'PC', 'Police Constable', 3, 0),
-	(5, 'apc', 'SPC', 'Senior Police Constable', 4, 0),
-	(6, 'apc', 'SGT', 'Sergeant', 5, 0),
-	(7, 'apc', 'INS', 'Inspector', 6, 0),
-	(8, 'apc', 'CI', 'Chief Inspector', 7, 0),
-	(9, 'apc', 'CMDR', 'Commander', 8, 0),
-	(10, 'apc', 'SI', 'Superintendent', 9, 0),
-	(11, 'apc', 'CSI', 'Chief Superintendent', 10, 0),
-	(12, 'apc', 'AC', 'Assistant Commissioner', 11, 0),
-	(13, 'apc', 'DC', 'Deputy Commissioner', 12, 0),
-	(14, 'apc', 'COM', 'Commissioner', 13, 0),
-	(15, 'nhs', 'N/A', 'N/A', 0, 1),
-	(16, 'nhs', 'STU', 'Student', 1, 0),
-	(17, 'nhs', 'FA', 'First Aider', 2, 0),
-	(18, 'nhs', 'PAR', 'Paramedic', 3, 0),
-	(19, 'nhs', 'DOC', 'Doctor', 4, 0),
-	(20, 'nhs', 'GP', 'General Practitioner', 5, 0),
-	(21, 'nhs', 'SUR', 'Surgeon', 6, 0),
-	(22, 'nhs', 'CST', 'Consultant', 7, 0),
-	(23, 'nhs', 'CMO', 'Chief Medical Officer', 8, 0);
+INSERT INTO `ranks` (`id`, `faction`, `sName`, `name`, `level`, `form_submit_1`, `form_submit_2`, `form_submit_3`, `form_submit_4`, `form_submit_5`, `form_submit_6`, `form_submit_7`, `form_submit_8`, `form_submit_9`, `form_submit_10`, `form_submit_11`, `form_submit_12`, `form_submit_13`, `page_access_1`, `page_access_2`, `page_access_3`, `page_access_4`, `page_access_5`, `page_access_6`, `page_access_7`, `page_access_8`, `system`) VALUES
+	(1, 'apc', 'N/A', 'N/A', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1),
+	(2, 'apc', 'CSO', 'Community Support Officer', 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0),
+	(3, 'apc', 'PCSO', 'Police Community Support Officer', 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0),
+	(4, 'apc', 'PC', 'Police Constable', 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0),
+	(5, 'apc', 'SPC', 'Senior Police Constable', 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0),
+	(6, 'apc', 'SGT', 'Sergeant', 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0),
+	(7, 'apc', 'INS', 'Inspector', 6, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0),
+	(8, 'apc', 'CI', 'Chief Inspector', 7, 0, 1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0),
+	(9, 'apc', 'SI', 'Superintendent', 8, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 0, 1, 0, 0),
+	(10, 'apc', 'CSI', 'Chief Superintendent', 9, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 0, 1, 0, 0),
+	(11, 'apc', 'AC', 'Assistant Commissioner', 10, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 0, 1, 0, 0),
+	(12, 'apc', 'DC', 'Deputy Commissioner', 11, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 0, 1, 0, 0),
+	(13, 'apc', 'COM', 'Commissioner', 12, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 0, 1, 0, 0),
+	(14, 'nhs', 'N/A', 'N/A', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1),
+	(15, 'nhs', 'STU', 'Student', 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+	(16, 'nhs', 'FA', 'First Aider', 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+	(17, 'nhs', 'PAR', 'Paramedic', 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+	(18, 'nhs', 'DOC', 'Doctor', 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+	(19, 'nhs', 'GP', 'General Practitioner', 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+	(20, 'nhs', 'SUR', 'Surgeon', 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+	(21, 'nhs', 'CST', 'Consultant', 7, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+	(22, 'nhs', 'CMO', 'Chief Medical Officer', 8, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0);
 /*!40000 ALTER TABLE `ranks` ENABLE KEYS */;
 
 -- Dumping structure for table factions_manager.responses
@@ -302,10 +314,10 @@ CREATE TABLE IF NOT EXISTS `sections` (
   `shortName` varchar(3) DEFAULT NULL,
   `name` varchar(50) DEFAULT NULL,
   `type` enum('Normal','Academy') NOT NULL DEFAULT 'Normal',
-  `prefix` int(11) DEFAULT '0',
-  `system` int(11) DEFAULT '0',
+  `prefix` int(11) DEFAULT 0,
+  `system` int(11) DEFAULT 0,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
 
 -- Dumping data for table factions_manager.sections: ~9 rows (approximately)
 /*!40000 ALTER TABLE `sections` DISABLE KEYS */;
@@ -329,7 +341,7 @@ CREATE TABLE IF NOT EXISTS `settings` (
   `time` time DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table factions_manager.settings: ~1 rows (approximately)
+-- Dumping data for table factions_manager.settings: ~0 rows (approximately)
 /*!40000 ALTER TABLE `settings` DISABLE KEYS */;
 INSERT INTO `settings` (`id`, `name`, `value`, `time`) VALUES
 	(1, 'tasksrun', 0, '00:00:00');
@@ -341,9 +353,9 @@ CREATE TABLE IF NOT EXISTS `subpages` (
   `faction` varchar(50) NOT NULL,
   `name` varchar(50) NOT NULL,
   `subdirectory` varchar(50) NOT NULL,
-  `active` int(11) NOT NULL DEFAULT '0',
+  `active` int(11) NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
 
 -- Dumping data for table factions_manager.subpages: ~8 rows (approximately)
 /*!40000 ALTER TABLE `subpages` DISABLE KEYS */;
@@ -361,3 +373,4 @@ INSERT INTO `subpages` (`id`, `faction`, `name`, `subdirectory`, `active`) VALUE
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
 /*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
