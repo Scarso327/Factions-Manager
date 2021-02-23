@@ -2,7 +2,7 @@
 
 class Factions {
 
-    public function getMember($faction, $steamid) {
+    public static function getMember($faction, $steamid) {
         $query = Database::getFactory()->getConnection(DB_NAME)->prepare("SELECT * FROM members WHERE faction = :faction AND steamid = :steamid limit 1");
         $query->execute(array(
             ':faction' => $faction,
@@ -14,7 +14,7 @@ class Factions {
     }
 
     // Used as it checks the archived state...
-    public function isMember($faction, $steamid, $archive = 0) {
+    public static function isMember($faction, $steamid, $archive = 0) {
         $query = Database::getFactory()->getConnection(DB_NAME)->prepare("SELECT * FROM members WHERE faction = :faction AND steamid = :steamid AND isArchive = :archive limit 1");
         $query->execute(array(
             ':faction' => $faction,
@@ -26,7 +26,7 @@ class Factions {
         return true;
     }
 
-    public function isNameTaken($faction, $name) {
+    public static function isNameTaken($faction, $name) {
         $query = Database::getFactory()->getConnection(DB_NAME)->prepare("SELECT * FROM members WHERE faction = :faction AND `name` = :name limit 1");
         $query->execute(array(
             ':faction' => $faction,
@@ -37,7 +37,7 @@ class Factions {
         return true;
     }
 
-    public function getFactionMembers($faction, $archive = 0) {
+    public static function getFactionMembers($faction, $archive = 0) {
         $query = Database::getFactory()->getConnection(DB_NAME)->prepare("SELECT * FROM members WHERE faction = :faction AND isArchive = :archive");
         $query->execute(array(
             ':faction' => $faction,
@@ -49,7 +49,7 @@ class Factions {
         return $query->fetchAll();
     }
 
-    public function getFactionMembersBySection ($faction, $section) {
+    public static function getFactionMembersBySection ($faction, $section) {
         $members = self::getFactionMembers($faction);
 
         $return = array();
@@ -63,7 +63,7 @@ class Factions {
         return $return;
     }
 
-    public function getActiveFactionMembers ($faction) {
+    public static function getActiveFactionMembers ($faction) {
         $members = self::getFactionMembers($faction);
 
         $return = array();
@@ -77,9 +77,9 @@ class Factions {
         return $return;
     }
 
-    public function orderRanks($rank1, $rank2) { return $rank1->level < $rank1->level; }
+    public static function orderRanks($rank1, $rank2) { return $rank1->level < $rank1->level; }
 
-    public function orderMembers($faction, $member1, $member2) {
+    public static function orderMembers($faction, $member1, $member2) {
         $ranks = Application::getRanks($faction);
 
         $m1Rank = $ranks[$member1->mainlevel]->level;

@@ -113,11 +113,11 @@ class Application {
         }
     }
 
-    public function getSections ($faction) {
+    public static function getSections ($faction) {
         return (self::$factions[$faction]["sections"]);
     }
 
-    public function getRanks ($faction) {
+    public static function getRanks ($faction) {
         return (self::$factions[$faction]["ranks"]);
     }
 

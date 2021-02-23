@@ -2,7 +2,7 @@
 
 class Powers {
 
-    public function getPowers($faction, $target) {
+    public static function getPowers($faction, $target) {
         $query = Database::getFactory()->getConnection(DB_NAME)->prepare("SELECT * FROM powers WHERE (faction = :faction OR faction = '') AND active = 1");
         $query->execute(array(":faction" => $faction));
 

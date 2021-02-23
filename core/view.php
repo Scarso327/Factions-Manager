@@ -152,7 +152,7 @@ class View {
         }
     }
 
-    public function getLanguage($faction, $key) {
+    public static function getLanguage($faction, $key) {
         $fullKey = $faction.$key;
 
         if (array_key_exists($fullKey, LAN_OVERRIDE)) {
@@ -162,7 +162,7 @@ class View {
         return LAN_OVERRIDE["default".$key];
     }
 
-    public function addForm($form) {
+    public static function addForm($form) {
         self::$forms[$form->id] = $form;
     }
 }

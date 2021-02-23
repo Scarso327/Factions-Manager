@@ -2,7 +2,7 @@
 
 class Member {
 
-    public function archive($faction, $steamid) {
+    public static function archive($faction, $steamid) {
         API::$internal = true;
         API::whitelist($faction, $steamid, "main", 0);
 
@@ -22,7 +22,7 @@ class Member {
         return false;
     }
 
-    public function unarchive($faction, $steamid, $rank, $section) {
+    public static function unarchive($faction, $steamid, $rank, $section) {
         $query = Database::getFactory()->getConnection(DB_NAME)->prepare("UPDATE members SET section = :section, mainlevel = :rank, isArchive = 0 WHERE faction = :faction AND steamid = :steamid LIMIT 1");
         $query->execute(array(
             ':section' => $section,
@@ -43,7 +43,7 @@ class Member {
         return false;
     }
 
-    public function changeLevel($faction, $steamid, $newRank) {
+    public static function changeLevel($faction, $steamid, $newRank) {
         $query = Database::getFactory()->getConnection(DB_NAME)->prepare("UPDATE members SET mainlevel = :rank, last_rank_change = CURRENT_TIMESTAMP() WHERE faction = :faction AND steamid = :steamid LIMIT 1");
         $query->execute(array(
             ':rank' => $newRank,
@@ -63,7 +63,7 @@ class Member {
         return false;
     }
 
-    public function rename($faction, $steamid, $newName) {
+    public static function rename($faction, $steamid, $newName) {
         $query = Database::getFactory()->getConnection(DB_NAME)->prepare("UPDATE members SET `name` = :name WHERE faction = :faction AND steamid = :steamid LIMIT 1");
         $query->execute(array(
             ':name' => $newName,
@@ -78,7 +78,7 @@ class Member {
         return false;
     }
 
-    public function transfer($faction, $steamid, $newSection) {
+    public static function transfer($faction, $steamid, $newSection) {
         $query = Database::getFactory()->getConnection(DB_NAME)->prepare("UPDATE members SET `section` = :section WHERE faction = :faction AND steamid = :steamid LIMIT 1");
         $query->execute(array(
             ':section' => $newSection,
@@ -93,7 +93,7 @@ class Member {
         return false;
     }
     
-    public function isState($faction, $steamid, $state) {
+    public static function isState($faction, $steamid, $state) {
         $query = Database::getFactory()->getConnection(DB_NAME)->prepare("SELECT * FROM members WHERE faction = :faction AND steamid = :steamid AND ".$state." = 1 limit 1");
         $query->execute(array(
             ':faction' => $faction,
@@ -104,7 +104,7 @@ class Member {
         return true;
     }
 
-    public function changeState($faction, $steamid, $state, $value) {
+    public static function changeState($faction, $steamid, $state, $value) {
         $query = Database::getFactory()->getConnection(DB_NAME)->prepare("UPDATE members SET ".$state." = :value WHERE faction = :faction AND steamid = :steamid LIMIT 1");
         $query->execute(array(
             ':faction' => $faction,
@@ -119,7 +119,7 @@ class Member {
         return false;
     }
 
-    public function getCustomID($faction, $member) {
+    public static function getCustomID($faction, $member) {
         $forumID = $member->forumid;
         $constab = $member->section;
 
@@ -139,7 +139,7 @@ class Member {
         return $prefix.$forumID;
     }
 
-    public function getActivity ($member) {
+    public static function getActivity ($member) {
         $activity = "Active";
         if ($member->isArchive == 1 && $member->isBlacklisted == 0) {
             $activity = "Archived";
@@ -171,7 +171,7 @@ class Member {
         return $activity;
     }
 
-    public function getLastSeen($steamid, $value = "lastcopseen") {
+    public static function getLastSeen($steamid, $value = "lastcopseen") {
         $thisPlayer = Database::getFactory(true)->getConnection(DB_NAME_LIFE, array(DB_HOST_LIFE, DB_USER_LIFE, DB_PASS_LIFE))->prepare(
             "SELECT playerid, ".$value." FROM players WHERE playerid = :steamid LIMIT 1"
         );

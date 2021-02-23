@@ -2,7 +2,7 @@
 
 class Form {
 
-    public function getForm ($faction, $formID) {
+    public static function getForm ($faction, $formID) {
         $query = Database::getFactory()->getConnection(DB_NAME)->prepare("SELECT * FROM forms WHERE id = :id AND (faction = :faction or faction = '') LIMIT 1");
         $query->execute(array(":id" => $formID, ":faction" => $faction));
         
@@ -10,7 +10,7 @@ class Form {
         return $query->fetch();
     }
 
-    public function getFields ($formID) {
+    public static function getFields ($formID) {
         $query = Database::getFactory()->getConnection(DB_NAME)->prepare("SELECT * FROM fields WHERE form = :id");
         $query->execute(array(":id" => $formID));
         
@@ -18,7 +18,7 @@ class Form {
         return $query->fetchAll();
     }
 
-    public function canSubmitForm($formID) {
+    public static function canSubmitForm($formID) {
         if (!Account::isLoggedIn()) { return false; } // Must be logged in...
 
         $member = Faction::$officer;
@@ -33,7 +33,7 @@ class Form {
         return true;
     }
 
-    public function getLowestRankWithAccess($formID) {
+    public static function getLowestRankWithAccess($formID) {
         $var = Faction::$var;
         if ($var == null) { return false; }
         

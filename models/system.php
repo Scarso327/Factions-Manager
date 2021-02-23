@@ -2,7 +2,7 @@
 
 class System {
 
-    public function getSubpages ($faction) {
+    public static function getSubpages ($faction) {
         $query = Database::getFactory()->getConnection(DB_NAME)->prepare("SELECT `id`, `name`, `subdirectory`, `active` FROM subpages WHERE faction = :faction");
         $query->execute(array(":faction" => $faction));
         
@@ -22,7 +22,7 @@ class System {
         return $return;
     }
 
-    public function canAccessPage($pageID) {
+    public static function canAccessPage($pageID) {
         if (!Account::isLoggedIn()) { return false; } // Must be logged in...
 
         $member = Faction::$officer;
@@ -37,7 +37,7 @@ class System {
         return true;
     }
 
-    public function getFactions () {
+    public static function getFactions () {
         $query = Database::getFactory()->getConnection(DB_NAME)->prepare("SELECT * FROM factions");
         $query->execute();
         
@@ -66,7 +66,7 @@ class System {
         return $return;
     }
 
-    private function getSections ($faction) {
+    private static function getSections ($faction) {
         $query = Database::getFactory()->getConnection(DB_NAME)->prepare("SELECT * FROM sections WHERE faction = :faction");
         $query->execute(array(":faction" => $faction));
         
@@ -80,7 +80,7 @@ class System {
         return $ret;
     }
 
-    private function getRanks ($faction) {
+    private static function getRanks ($faction) {
         $query = Database::getFactory()->getConnection(DB_NAME)->prepare("SELECT * FROM ranks WHERE faction = :faction");
         $query->execute(array(":faction" => $faction));
         

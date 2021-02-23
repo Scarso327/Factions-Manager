@@ -11,12 +11,12 @@ class Account {
         self::$adminlevel = Accounts::IsAdmin($steamid);
     }
 
-    public function isLoggedIn() {
+    public static function isLoggedIn() {
         if (self::$steamid != null) { return true; } // If the steamid is not null, we're logged in...
         return false;
     }
 
-    public function logout($redirect = true) {
+    public static function logout($redirect = true) {
         // Session Handling...
         Session::start();
         Session::close();

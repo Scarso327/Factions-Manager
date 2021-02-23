@@ -5,7 +5,7 @@ class Logs {
     /*
     ** Creates a new "log" or "Form" as they were known before v2
     */
-    public function log ($faction, $fields, $actioner, $action, $status, $level) {
+    public static function log ($faction, $fields, $actioner, $action, $status, $level) {
         $member = $fields["steamid"]["value"];
 
         if ($faction == "" || $member == "" || $actioner == "" || $action == "" || $status == "" || !Factions::getMember($faction, $member)) {
@@ -61,7 +61,7 @@ class Logs {
     /*
     ** Gets logs for given target...
     */
-    public function getHistory ($faction, $steamid, $target = "member", $dates = array()) {
+    public static function getHistory ($faction, $steamid, $target = "member", $dates = array()) {
         if (!(count($dates) > 0)) {
             $dates = array(date('Y-m-d', strtotime('-1 week')), date('Y-m-d'));
         }
@@ -81,7 +81,7 @@ class Logs {
     /*
     ** Read it...
     */
-    public function getResponse($logid) {
+    public static function getResponse($logid) {
         $query = Database::getFactory()->getConnection(DB_NAME)->prepare("SELECT * FROM responses WHERE logid = :id");
         $query->execute(array(":id" => $logid));
 

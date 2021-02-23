@@ -17,7 +17,7 @@ class Forms {
     private static $fieldPrefix = "";
     private static $member = false;
 
-    public function buildForm ($form, $fields, $readonly = false) {
+    public static function buildForm ($form, $fields, $readonly = false) {
         $faction = $form->faction;
 
         if ($faction == "") {
@@ -69,7 +69,7 @@ class Forms {
         ";
     }
 
-    public function onFormSubmit ($form, $fields) {
+    public static function onFormSubmit ($form, $fields) {
         if (!Form::canSubmitForm($form->id)) {
             new DisplayError("#Fe007");
             exit;

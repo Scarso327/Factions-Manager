@@ -5,7 +5,7 @@ require_once ROOT."openid.php";
 class Steam {
 
     // Starts the OpenID Steam stuff for loggin...
-    public function OpenIDSteam () {
+    public static function OpenIDSteam () {
 
         // If they're already logged in, why relog them in?
         if (Account::isLoggedIn()) { 

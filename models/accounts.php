@@ -5,7 +5,7 @@ class Accounts {
     // Returns are:
     //      True: If we have a client entry...
     //      False: If we dont have a client entry...
-    public function IsUser($steamid) {
+    public static function IsUser($steamid) {
         $query = Database::getFactory()->getConnection(DB_NAME)->prepare("SELECT steamid FROM accounts WHERE steamid = :steamid limit 1");
         $query->execute(array(":steamid" => $steamid));
         
@@ -13,7 +13,7 @@ class Accounts {
         return true;
     }
 
-    public function IsAdmin ($steamid) {
+    public static function IsAdmin ($steamid) {
         $query = Database::getFactory()->getConnection(DB_NAME)->prepare("SELECT isAdmin FROM accounts WHERE steamid = :steamid limit 1");
         $query->execute(array(":steamid" => $steamid));
         
@@ -39,7 +39,7 @@ class Accounts {
     }
 
     // Updates relevent steam stuff...
-    public function updateSteam ($steamid, $steaminfo) {
+    public static function updateSteam ($steamid, $steaminfo) {
         $statement = "UPDATE accounts
                       SET steamName = :steamName, steamid = :steamid, steampfp = :steampfp, steampfpmed = :steampfpmed, steampfplarge = :steampfplarge
                       WHERE steamid = :steamid LIMIT 1";
@@ -58,7 +58,7 @@ class Accounts {
         return false;
     }
 
-    public function updateAccess ($steamid, $adminlevel) {
+    public static function updateAccess ($steamid, $adminlevel) {
         $statement = "UPDATE accounts SET isAdmin = :isAdmin WHERE steamid = :steamid LIMIT 1";
         $db = Database::getFactory()->getConnection(DB_NAME);
         $query = $db->prepare($statement);
@@ -75,7 +75,7 @@ class Accounts {
     /*
     ** Thanks Kevin! (Checks our cookie against the database...)
     */
-    public function checkToken($steamid, $token) {
+    public static function checkToken($steamid, $token) {
         $query = Database::getFactory()->getConnection(DB_NAME)->prepare("SELECT steamid FROM accounts WHERE steamid = :steamid AND remember_token = :token limit 1");
         $query->execute(array(":steamid" => $steamid, ":token" => $token));
         
@@ -86,7 +86,7 @@ class Accounts {
     /*
     ** Thanks Kevin! (Sets our remember token...)
     */
-    public function setToken($steamid) {
+    public static function setToken($steamid) {
         if (!(self::IsUser($steamid))) { return false; }
 
         // Create the token!
