@@ -8,6 +8,10 @@ class API extends Controller {
         header('Content-Type: application/json');
     }
 
+    public function index () {
+        info();
+    }
+
     public function info () {
         $info = array("version" => API_VER);
 
