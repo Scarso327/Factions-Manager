@@ -181,6 +181,11 @@ class Forms {
 
     // Lists all members of the faction excluding ourselves...
     private static function factionMembers ($field, $faction, $readonly) {
+        echo "<select name = '".$field->fieldName."' ".$field->conditions.self::$fieldPrefix.">";
+            foreach (Factions::getFactionMembers($faction) as $member) {
+                echo '<option value="'.$rank->steamid.'">'.$member->name.'</option>';
+            }
+        echo "</select>";
 
     }
 
