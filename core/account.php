@@ -5,12 +5,6 @@ class Account {
     public static $steamid = null;
     public static $adminlevel = false;
 
-    // Create the new "Account Session"
-    public function __construct($steamid) {
-        self::$steamid = $steamid;
-        self::$adminlevel = Accounts::IsAdmin($steamid);
-    }
-
     public static function isLoggedIn() {
         if (self::$steamid != null) { return true; } // If the steamid is not null, we're logged in...
         return false;

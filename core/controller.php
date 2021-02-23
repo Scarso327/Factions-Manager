@@ -44,8 +44,9 @@ class Controller {
                 Steam::resync($_COOKIE['steam_id']);
             }
         }
-
-        new Account (Session::get("steamid"));
+        
+        Account::$steamid = Session::get("steamid");
+        Account::$adminlevel = Accounts::IsAdmin(Account::$steamid);
         
         if ($auth) {
             // Check our login...
