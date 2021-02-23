@@ -3,7 +3,7 @@
 class System {
 
     public static function getSubpages ($faction) {
-        $query = Database::getFactory()->getConnection(DB_NAME)->prepare("SELECT `id`, `name`, `subdirectory`, `active` FROM subpages WHERE faction = :faction");
+        $query = Database::getFactory()->getConnection(DB_NAME)->prepare("SELECT `id`, `name`, `subdirectory`, `order`, `active` FROM subpages WHERE faction = :faction");
         $query->execute(array(":faction" => $faction));
         
         if ($query->rowCount() == 0) { return array(); } 
@@ -12,13 +12,11 @@ class System {
 
         foreach ($query->fetchAll() as $nav) {
             if ($nav->active == 1 && (System::canAccessPage($nav->id))) {
-                array_push (
-                    $return,
-                    array ($nav->subdirectory, $nav->name)
-                );
+                $return[$nav->order] = array ($nav->subdirectory, $nav->name);
             };
         }
-
+        
+        ksort($return);
         return $return;
     }
 
