@@ -86,6 +86,9 @@
                         <?php
                     }
                     ?>
+                    <li title="<?=((Application::$isDark) ? "Light" : "Dark");?> Theme">
+                        <a theme-toggle class = "theme-toggle"><span class="fas <?=((Application::$isDark) ? "fa-sun" : "fa-moon");?>"></span></a>
+                    </li>
                 </div>
             </ul>
         </div>

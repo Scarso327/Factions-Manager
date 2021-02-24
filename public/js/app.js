@@ -11,20 +11,22 @@ class Application {
     static toggleTheme(button) {
         $.ajax({
             type: "POST",
-            url: "api/toggleTheme/",
+            url: window.location.protocol + "//" + window.location.host + "/api/toggleTheme/",
             success: function(response){
                 var body = $("#main-body");
                 var icon = button.children().first();
 
                 if (body.hasClass("dark")) {
                     body.removeClass("dark");
-                    icon.removeClass("fa-times-circle");
-                    icon.addClass("fa-check-circle");
+                    icon.removeClass("fa-sun");
+                    icon.addClass("fa-moon");
+                    icon.parent().parent().attr("title", "Dark Theme");
                     button.removeClass("active");
                 } else {
                     body.addClass("dark");
-                    icon.removeClass("fa-check-circle");
-                    icon.addClass("fa-times-circle");
+                    icon.removeClass("fa-moon");
+                    icon.addClass("fa-sun");
+                    icon.parent().parent().attr("title", "Dark Theme");
                     button.addClass("active");
                 }
             }
