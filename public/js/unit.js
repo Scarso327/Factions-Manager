@@ -12,7 +12,7 @@ class Unit {
     static changeRank(faction, steamid, unitid, rankid) {
         $.ajax({
             type: "POST",
-            url: "http://localhost/api/unit/",
+            url: "/api/unit/",
             data: {
                 faction: faction,
                 steamid: steamid,
