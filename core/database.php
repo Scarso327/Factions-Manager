@@ -32,7 +32,7 @@ class Database
     }
 
     public function lastInsertId(){
-        return self::$factory->database->lastInsertId();
+        return $this->database->lastInsertId();
     }
 }
 ?>
