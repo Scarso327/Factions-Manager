@@ -26,19 +26,20 @@
                 }
             ?>
         </div>
-        <?php
-        if (!$this->archive && !$this->public) {
-            $form = Form::getForm($faction, (Application::$factions[$faction]["addFormID"]));
+        <div class = "button-list">
+            <?php
+            if (!$this->archive && !$this->public) {
+                echo '<a staff-toggle class="staff-toggle button">'.((isset($_COOKIE["show-staff"])) ? "Hide" : "Show").' Staff</a>';
+                $form = Form::getForm($faction, (Application::$factions[$faction]["addFormID"]));
 
-            if ($form && (Form::canSubmitForm($form->id))) {
-                ?>
-                <div class = "button-list">
+                if ($form && (Form::canSubmitForm($form->id))) {
+                    ?>
                     <a class = "button" href="<?=URL.$faction?>/form/<?=$form->id;?>-<?=$form->name;?>">Add Member</a>
-                </div>
-                <?php
+                    <?php
+                }
             }
-        }
-        ?>
+            ?>
+        </div>
     </section>
     <section class = "search">
         <input type="text" id = "searchRoster" onkeyup="FilterTable()" placeholder="Search (Name, Steam ID, Forum ID)">
@@ -80,42 +81,44 @@
                 });
 
                 foreach ($members as $member) {
-                    $activity = Member::getActivity($member);
+                    if (($member->section == "Staff" && (!$this->archive && !$this->public)) || $member->section != "Staff") {
+                        $activity = Member::getActivity($member);
 
-                    $page = "";
-                    if ($this->archive) { $page = "archive/"; }
+                        $page = "";
+                        if ($this->archive) { $page = "archive/"; }
 
-                    ?>
-                    <tr id = "<?=$member->section;?>">
-                        <td><?=Member::getCustomID($faction, $member)?></td>
-                        <td><?=$member->name;?></td>
-                        <td><?=Application::getRanks($faction)[$member->mainlevel]->sName?></td>
-                        <td><?=$member->steamid;?></td>
-                        <td class = "status <?=$activity?>" title="<?=date('d/m/Y H:i:s', strtotime($member->last_login));?>"><?=$activity?></td>
-                        <td><?=date("d/m/Y", strtotime($member->joindate))?></td>
-                        <td><?=date("d/m/Y", strtotime($member->last_rank_change))?></td>
-                        <?php
-                        if (SETTING["stats-url"] != "") {
-                            ?>
-                            <td class = "stats"><a href="<?=SETTING["stats-url"].$member->steamid?>" target="_blank">Stats</a></td>
-                            <?php
-                        }
                         ?>
-                        <?php
-                        if ($this->public) {
-                            if (SETTING["forums-url"] != "") {
+                        <tr id = "<?=$member->section;?>" <?=(($member->section == "Staff") ? 'hidden-staff' : '');?> <?=((!isset($_COOKIE['show-staff']) && $member->section == "Staff") ? 'class="hide"' : '');?>>
+                            <td><?=Member::getCustomID($faction, $member)?></td>
+                            <td><?=$member->name;?></td>
+                            <td><?=Application::getRanks($faction)[$member->mainlevel]->sName?></td>
+                            <td><?=$member->steamid;?></td>
+                            <td class = "status <?=$activity?>" title="<?=date('d/m/Y H:i:s', strtotime($member->last_login));?>"><?=$activity?></td>
+                            <td><?=date("d/m/Y", strtotime($member->joindate))?></td>
+                            <td><?=date("d/m/Y", strtotime($member->last_rank_change))?></td>
+                            <?php
+                            if (SETTING["stats-url"] != "") {
                                 ?>
-                                <td class = "manage" style="background-color: #007aff;"><a href="<?=SETTING["forums-url"].$member->forumid;?>-<?=$member->name;?>/" target="_blank">Forum</a></td>
+                                <td class = "stats"><a href="<?=SETTING["stats-url"].$member->steamid?>" target="_blank">Stats</a></td>
                                 <?php
                             }
-                        } else {
                             ?>
-                            <td class = "manage"><a href="<?=URL.($faction)."/".$page.$member->steamid?>">Manage</a></td>
                             <?php
-                        }
-                        ?>
-                    </tr>
-                    <?php
+                            if ($this->public) {
+                                if (SETTING["forums-url"] != "") {
+                                    ?>
+                                    <td class = "manage" style="background-color: #007aff;"><a href="<?=SETTING["forums-url"].$member->forumid;?>-<?=$member->name;?>/" target="_blank">Forum</a></td>
+                                    <?php
+                                }
+                            } else {
+                                ?>
+                                <td class = "manage"><a href="<?=URL.($faction)."/".$page.$member->steamid?>">Manage</a></td>
+                                <?php
+                            }
+                            ?>
+                        </tr>
+                        <?php
+                    }
                 }
             } else {
                 ?>

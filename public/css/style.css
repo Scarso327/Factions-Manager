@@ -514,3 +514,7 @@ button, .breadcrumbs.buttons a.button {
     position: relative;
     bottom: -1px;
 }
+
+.hide {
+    display: none;
+}

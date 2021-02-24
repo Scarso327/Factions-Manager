@@ -232,6 +232,17 @@ class API extends Controller {
         self::return(array("result" => "success"));
     }
 
+    public function toggleStaff () {
+        if (isset($_COOKIE['show-staff'])) {
+            setcookie("show-staff", null, -1, "/");
+        } else {
+            setcookie("show-staff", true, time() + (10 * 365 * 24 * 60 * 60), "/");
+        }
+
+        if (self::$internal) { return true; } // Wtf...
+        self::return(array("result" => "success"));
+    }
+
     private function auth ($faction) {
         parent::__construct(true);
 
