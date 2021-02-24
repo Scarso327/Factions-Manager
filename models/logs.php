@@ -28,7 +28,7 @@ class Logs {
         ));
 
         if ($query->rowCount() == 1) {
-            $logID = Database::lastInsertId();
+            $logID = $db->lastInsertId();
 
             foreach ($fields as $field) {
                 // If it's not an account indicator (steamid), add it to responses...
