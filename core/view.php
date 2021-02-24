@@ -35,7 +35,7 @@ class View {
 
                 echo "
                 <link rel='stylesheet' href='".URL."css/dark-theme-override.css?v=".time()."' type='text/css' />
-                <script src='".URL."js/app.js'></script>
+                <script src='".URL."js/app.js?v=1'></script>
                 ";
                 
 
