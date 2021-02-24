@@ -192,7 +192,7 @@ class Member {
     }
 
     public static function addUnitRank($member_id, $unit_id, $rank_id) {
-        $query = Database::getFactory()->getConnection(DB_NAME)->prepare("INSERT INTO units_members (`member_id`, `member_id`, `rank_id`) VALUES (:member_id, :unit_id, :rank_id)");
+        $query = Database::getFactory()->getConnection(DB_NAME)->prepare("INSERT INTO units_members (`member_id`, `unit_id`, `rank_id`) VALUES (:member_id, :unit_id, :rank_id)");
         $query->execute(array(':member_id' => $member_id, ':unit_id' => $unit_id, ':rank_id' => $rank_id));
         return ($query->rowCount() == 1);
     }
