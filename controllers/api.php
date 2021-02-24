@@ -105,14 +105,14 @@ class API extends Controller {
 
         if (!self::$internal) { self::auth($faction); } // Only required if external...
 
-        $member = Factions::getMember($faction, Account::$steamid);
-        if ($member == null) {
+        $staff = Factions::getMember($faction, Account::$steamid);
+        if ($staff == null) {
             if (self::$internal) { return false; }
             self::return(array("result" => "fail", "reason" => "admin-not-found"));
             exit;
         }
 
-        if (!Units::canChangeRank($member, $faction)) {
+        if (!Units::canChangeRank($staff, $faction)) {
             if (self::$internal) { return false; }
             self::return(array("result" => "fail", "reason" => "no-permission"));
             exit;
