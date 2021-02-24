@@ -137,7 +137,7 @@
                                     <li><span><?=$name;?></span></li>
                                     <li>
                                         <?php
-                                        if (Units::canChangeRank($this->member, Faction::$var)) {
+                                        if (Units::canChangeRank(Account::$steamid, Faction::$var)) {
                                             ?>
                                             <select rank-dropdown data-faction="<?=Faction::$var;?>" data-steamid="<?=$this->member->steamid;?>" data-unitid="<?=$unit["unit"]->id;?>">
                                                 <?php
