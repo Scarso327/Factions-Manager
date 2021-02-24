@@ -186,7 +186,6 @@ class Forms {
                 echo '<option value="'.$rank->steamid.'">'.$member->name.'</option>';
             }
         echo "</select>";
-
     }
 
     // Lists all ranks within the faction...

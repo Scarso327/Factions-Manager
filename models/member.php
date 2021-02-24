@@ -178,4 +178,33 @@ class Member {
         $thisPlayer->execute(array(":steamid" => $steamid));
         return $thisPlayer;
     }
+
+    public static function getUnitRank($member_id, $unit_id) {
+        $query = Database::getFactory()->getConnection(DB_NAME)->prepare("SELECT * FROM units_members WHERE member_id = :member_id AND unit_id = :unit_id");
+        $query->execute(array(
+            ':member_id' => $member_id,
+            ':unit_id' => $unit_id
+        ));
+
+        if ($query->rowCount() == 0) { return false; }
+        
+        return $query->fetch();
+    }
+
+    public static function addUnitRank($member_id, $unit_id, $rank_id) {
+        $query = Database::getFactory()->getConnection(DB_NAME)->prepare("INSERT INTO units_members (`unit_id`, `member_id`, `rank_id`) VALUES (:member_id, :unit_id, :rank_id)");
+        $query->execute(array(':member_id' => $member_id, ':unit_id' => $unit_id, ':rank_id' => $rank_id));
+        return ($query->rowCount() == 1);
+    }
+
+    public static function setUnitRank($member_id, $unit_id, $rank_id) {
+        $query = Database::getFactory()->getConnection(DB_NAME)->prepare("UPDATE units_members SET rank_id = :rank_id WHERE member_id = :member_id AND unit_id = :unit_id");
+        $query->execute(array(
+            ':member_id' => $member_id,
+            ':unit_id' => $unit_id,
+            ':rank_id' => $rank_id
+        ));
+
+        return ($query->rowCount() >= 1);
+    }
 }

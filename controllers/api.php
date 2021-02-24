@@ -94,6 +94,133 @@ class API extends Controller {
         self::return(array("result" => "success", "responses" => array("steamid" => $steamid, "column" => $type, "level" => $level)));
     }
     
+    public function unit () {
+        if (!isset($_POST['faction'])) {
+            if (self::$internal) { return false; }
+            self::return(array("result" => "fail", "reason" => "faction-not-set"));
+            exit;
+        }
+  
+        $faction = $_POST['faction'];
+
+        if (!self::$internal) { self::auth($faction); } // Only required if external...
+
+        $member = Factions::getMember($faction, Account::$steamid);
+        if ($member == null) {
+            if (self::$internal) { return false; }
+            self::return(array("result" => "fail", "reason" => "admin-not-found"));
+            exit;
+        }
+
+        if (!Units::canChangeRank($member, $faction)) {
+            if (self::$internal) { return false; }
+            self::return(array("result" => "fail", "reason" => "no-permission"));
+            exit;
+        }
+
+        if (!isset($_POST['steamid']) || !isset($_POST['unit_id']) || !isset($_POST['rank_id'])) {
+            if (self::$internal) { return false; }
+            self::return(array("result" => "fail", "reason" => "invalid-data"));
+            exit;
+        }
+
+        $steamid = $_POST['steamid'];
+        $unit_id = $_POST['unit_id'];
+        $rank_id = $_POST['rank_id'];
+
+        if (!Steam::isSteamID($steamid)) {
+            if (self::$internal) { return false; }
+            self::return(array("result" => "fail", "reason" => "steamid-validation-fail"));
+            exit;
+        }
+
+        $unit = Units::getUnit($faction, $unit_id);
+
+        if (!$unit) {
+            if (self::$internal) { return false; }
+            self::return(array("result" => "fail", "reason" => "unit-doesnt-exist"));
+            exit;
+        }
+
+        $unit = $unit["unit"];
+
+        if ($unit->db_col == "") {
+            if (self::$internal) { return false; }
+            self::return(array("result" => "fail", "reason" => "unit-doesnt-have-col"));
+            exit;
+        }
+
+        $member = Factions::getMember($faction, $steamid);
+        if (!$member) {
+            if (self::$internal) { return false; }
+            self::return(array("result" => "fail", "reason" => "member-doesnt-exist"));
+            exit;
+        }
+
+        $rank = Units::getUnitRank($unit_id, $rank_id);
+        if (!$rank) {
+            if (self::$internal) { return false; }
+            self::return(array("result" => "fail", "reason" => "rank-id-doesnt-exist"));
+            exit;
+        }
+
+        $fields = array(
+            "steamid" => array (
+                "name" => "Level",
+                "fieldName" => "steamid",
+                "value" => $steamid
+            ),
+            "newlevel" => array (
+                "name" => "Rank",
+                "fieldName" => "newlevel",
+                "value" => $rank->name
+            )
+        );
+
+        if (!Logs::log($faction, $fields, Account::$steamid, "Unit", "Rank Changed", 0)) {
+            if (self::$internal) { return false; }
+            self::return(array("result" => "fail", "reason" => "log-failed"));
+            exit;
+        }
+
+        if (!Member::setUnitRank($member->id, $unit_id, $rank_id)) {
+            if (!Member::addUnitRank($member->id, $unit_id, $rank_id)) {
+                if (self::$internal) { return false; }
+                self::return(array("result" => "fail", "reason" => "local-set-rank-failed"));
+                exit;
+            }
+        }
+
+        $db = Database::getFactory(true)->getConnection(DB_NAME_LIFE, array(DB_HOST_LIFE, DB_USER_LIFE, DB_PASS_LIFE), true);
+
+        if (!$db) {
+            if (self::$internal) { return false; }
+            self::return(array("result" => "fail", "reason" => "db-connection-failed"));
+            exit;
+        }
+
+        $db = $db->prepare("UPDATE ".SETTING["db-player-table"]." SET ".$unit->db_col." = :newlevel WHERE playerid = :steamid LIMIT 1");
+        $db->execute(array(
+            ":newlevel" => $rank->level,
+            ":steamid" => $steamid
+        ));
+
+        if ($db->errorCode() != "0000") {
+            if (self::$internal) { return false; }
+            self::return(array("result" => "fail", "reason" => $db->errorInfo()[2]));
+            exit;
+        }
+
+        if ($db->rowCount() == 0) {
+            if (self::$internal) { return false; }
+            self::return(array("result" => "fail", "reason" => "no-rows-updated"));
+            exit;
+        }
+        
+        if (self::$internal) { return true; }
+        self::return(array("result" => "success", "responses" => array("steamid" => $steamid, "unit_id" => $unit_id, "rank" => $rank->name)));
+    }
+
     public function toggleTheme () {
         if (isset($_COOKIE['dark-theme'])) {
             setcookie("dark-theme", null, -1, "/");

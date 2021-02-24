@@ -1,57 +1,54 @@
-select {
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    padding: 5px;
-    outline: 0;
-    color: #71686e;
-    font-size: 16px;
-    width: 100%;
-    margin-bottom: 10px;
+.unit-container {
+    max-width: 1350px;
 }
 
-.unit-list {
-    width: 100%;
+.unit-cards {
     display: flex;
-    flex-direction: column;
-    list-style: none;
-    margin: 0;
-    padding: 0;
+    flex-wrap: wrap;
 }
 
-.unit-list .unit-item {
-    width: 100%;
-    box-sizing: border-box;
-    height: fit-content;
-    background-color: #fafbfc;
-    border: 1px solid #ccc;
-    border-radius: 10px;
-    margin-bottom: 10px;
+.unit-cards .unit-card {
+    display: block;
+    padding: 18px;
+    align-items: center;
+    text-align: center;
+    margin: 0 15px 15px;
+    border: 1px solid black;
 }
 
-.unit-list .unit-item a {
-    padding: 10px;
+.unit-cards .unit-card img {
+    width: 256px;
+}
+
+.unit-cards .unit-card:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.unit-items {
     display: flex;
-    width: 100%;
-}
-
-.unit-list .unit-item a img {
-    max-height: 90px;
-    max-width: 90px;
-    vertical-align: middle;
-    margin-right: 10px;
-}
-
-.unit-list .unit-item a .info {
-    display: flex;
-    flex-direction: column;
+    flex-wrap: wrap;
     justify-content: center;
 }
 
-.unit-list .unit-item a .info h3, .unit-list .unit-item a .info p {
-    margin: 0;
+.unit-item {
+    display: block;
+    padding: 18px;
+    align-items: center;
+    text-align: center;
+    list-style: none;
+    margin: 0 15px 15px;
+    border-radius: 5px;
+    background-color: #333333;
 }
 
-.unit-navbar {
-    position: relative;
-    bottom: -1px;
+.unit-item img {
+    width: 128px;
+}
+
+.unit-item li {
+    align-items:center;
+}
+
+.unit-item select {
+    margin: 0;
 }

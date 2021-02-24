@@ -263,35 +263,37 @@ CREATE TABLE IF NOT EXISTS `ranks` (
   `page_access_6` int(11) NOT NULL DEFAULT 0,
   `page_access_7` int(11) NOT NULL DEFAULT 0,
   `page_access_8` int(11) NOT NULL DEFAULT 0,
+  `page_access_9` int(11) NOT NULL DEFAULT 0,
+  `unit_promote` int(11) NOT NULL DEFAULT 0,
   `system` int(11) NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=latin1;
 
 -- Dumping data for table factions_manager.ranks: ~22 rows (approximately)
 /*!40000 ALTER TABLE `ranks` DISABLE KEYS */;
-INSERT INTO `ranks` (`id`, `faction`, `sName`, `name`, `level`, `form_submit_1`, `form_submit_2`, `form_submit_3`, `form_submit_4`, `form_submit_5`, `form_submit_6`, `form_submit_7`, `form_submit_8`, `form_submit_9`, `form_submit_10`, `form_submit_11`, `form_submit_12`, `form_submit_13`, `page_access_1`, `page_access_2`, `page_access_3`, `page_access_4`, `page_access_5`, `page_access_6`, `page_access_7`, `page_access_8`, `system`) VALUES
-	(1, 'apc', 'N/A', 'N/A', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1),
-	(2, 'apc', 'CSO', 'Community Support Officer', 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0),
-	(3, 'apc', 'PCSO', 'Police Community Support Officer', 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0),
-	(4, 'apc', 'PC', 'Police Constable', 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0),
-	(5, 'apc', 'SPC', 'Senior Police Constable', 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0),
-	(6, 'apc', 'SGT', 'Sergeant', 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0),
-	(7, 'apc', 'INS', 'Inspector', 6, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0),
-	(8, 'apc', 'CI', 'Chief Inspector', 7, 0, 1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0),
-	(9, 'apc', 'SI', 'Superintendent', 8, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 0, 1, 0, 0),
-	(10, 'apc', 'CSI', 'Chief Superintendent', 9, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 0, 1, 0, 0),
-	(11, 'apc', 'AC', 'Assistant Commissioner', 10, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 0, 1, 0, 0),
-	(12, 'apc', 'DC', 'Deputy Commissioner', 11, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 0, 1, 0, 0),
-	(13, 'apc', 'COM', 'Commissioner', 12, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 0, 1, 0, 0),
-	(14, 'nhs', 'N/A', 'N/A', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1),
-	(15, 'nhs', 'STU', 'Student', 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-	(16, 'nhs', 'FA', 'First Aider', 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-	(17, 'nhs', 'PAR', 'Paramedic', 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-	(18, 'nhs', 'DOC', 'Doctor', 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-	(19, 'nhs', 'GP', 'General Practitioner', 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-	(20, 'nhs', 'SUR', 'Surgeon', 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-	(21, 'nhs', 'CST', 'Consultant', 7, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-	(22, 'nhs', 'CMO', 'Chief Medical Officer', 8, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0);
+INSERT INTO `ranks` (`id`, `faction`, `sName`, `name`, `level`, `form_submit_1`, `form_submit_2`, `form_submit_3`, `form_submit_4`, `form_submit_5`, `form_submit_6`, `form_submit_7`, `form_submit_8`, `form_submit_9`, `form_submit_10`, `form_submit_11`, `form_submit_12`, `form_submit_13`, `page_access_1`, `page_access_2`, `page_access_3`, `page_access_4`, `page_access_5`, `page_access_6`, `page_access_7`, `page_access_8`, `page_access_9`, `unit_promote`, `system`) VALUES
+	(1, 'apc', 'N/A', 'N/A', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1),
+	(2, 'apc', 'CSO', 'Community Support Officer', 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0),
+	(3, 'apc', 'PCSO', 'Police Community Support Officer', 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0),
+	(4, 'apc', 'PC', 'Police Constable', 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0),
+	(5, 'apc', 'SPC', 'Senior Police Constable', 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0),
+	(6, 'apc', 'SGT', 'Sergeant', 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0),
+	(7, 'apc', 'INS', 'Inspector', 6, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0),
+	(8, 'apc', 'CI', 'Chief Inspector', 7, 0, 1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0),
+	(9, 'apc', 'SI', 'Superintendent', 8, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0),
+	(10, 'apc', 'CSI', 'Chief Superintendent', 9, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0),
+	(11, 'apc', 'AC', 'Assistant Commissioner', 10, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0),
+	(12, 'apc', 'DC', 'Deputy Commissioner', 11, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0),
+	(13, 'apc', 'COM', 'Commissioner', 12, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 0, 1, 0, 1, 1, 0),
+	(14, 'nhs', 'N/A', 'N/A', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1),
+	(15, 'nhs', 'STU', 'Student', 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0),
+	(16, 'nhs', 'FA', 'First Aider', 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0),
+	(17, 'nhs', 'PAR', 'Paramedic', 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0),
+	(18, 'nhs', 'DOC', 'Doctor', 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0),
+	(19, 'nhs', 'GP', 'General Practitioner', 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0),
+	(20, 'nhs', 'SUR', 'Surgeon', 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0),
+	(21, 'nhs', 'CST', 'Consultant', 7, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0),
+	(22, 'nhs', 'CMO', 'Chief Medical Officer', 8, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 0, 1, 0, 1, 1, 0, 0);
 /*!40000 ALTER TABLE `ranks` ENABLE KEYS */;
 
 -- Dumping structure for table factions_manager.responses
@@ -344,7 +346,7 @@ CREATE TABLE IF NOT EXISTS `settings` (
 -- Dumping data for table factions_manager.settings: ~0 rows (approximately)
 /*!40000 ALTER TABLE `settings` DISABLE KEYS */;
 INSERT INTO `settings` (`id`, `name`, `value`, `time`) VALUES
-	(1, 'tasksrun', 0, '00:00:00');
+	(1, 'tasksrun', 1, '00:00:00');
 /*!40000 ALTER TABLE `settings` ENABLE KEYS */;
 
 -- Dumping structure for table factions_manager.subpages
@@ -353,22 +355,75 @@ CREATE TABLE IF NOT EXISTS `subpages` (
   `faction` varchar(50) NOT NULL,
   `name` varchar(50) NOT NULL,
   `subdirectory` varchar(50) NOT NULL,
-  `active` int(11) NOT NULL DEFAULT 0,
+  `order` int(11) NOT NULL DEFAULT 0,
+  `active` tinyint(4) NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
 
--- Dumping data for table factions_manager.subpages: ~8 rows (approximately)
+-- Dumping data for table factions_manager.subpages: ~9 rows (approximately)
 /*!40000 ALTER TABLE `subpages` DISABLE KEYS */;
-INSERT INTO `subpages` (`id`, `faction`, `name`, `subdirectory`, `active`) VALUES
-	(1, 'apc', 'PNC', 'apc/', 1),
-	(2, 'nhs', 'Interpol', 'nhs/', 1),
-	(3, 'apc', 'Archive', 'apc/archive', 1),
-	(4, 'nhs', 'Archive', 'nhs/archive', 1),
-	(5, 'apc', 'Custom Search', 'apc/search', 1),
-	(6, 'nhs', 'Custom Search', 'nhs/search', 1),
-	(7, 'apc', 'Statistics', 'apc/stats', 1),
-	(8, 'nhs', 'Statistics', 'nhs/stats', 1);
+INSERT INTO `subpages` (`id`, `faction`, `name`, `subdirectory`, `order`, `active`) VALUES
+	(1, 'apc', 'PNC', 'apc/', 0, 1),
+	(2, 'nhs', 'Interpol', 'nhs/', 0, 1),
+	(3, 'apc', 'Archive', 'apc/archive', 1, 1),
+	(4, 'nhs', 'Archive', 'nhs/archive', 1, 1),
+	(5, 'apc', 'Custom Search', 'apc/search', 3, 1),
+	(6, 'nhs', 'Custom Search', 'nhs/search', 2, 1),
+	(7, 'apc', 'Statistics', 'apc/stats', 4, 1),
+	(8, 'nhs', 'Statistics', 'nhs/stats', 3, 1),
+	(9, 'apc', 'Units', 'apc/units', 2, 1);
 /*!40000 ALTER TABLE `subpages` ENABLE KEYS */;
+
+-- Dumping structure for table factions_manager.units
+CREATE TABLE IF NOT EXISTS `units` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `faction` varchar(3) NOT NULL,
+  `sName` varchar(5) NOT NULL DEFAULT 'Unit',
+  `name` varchar(50) NOT NULL DEFAULT 'Unit Name',
+  `db_col` varchar(50) NOT NULL,
+  `active` tinyint(4) NOT NULL DEFAULT 0,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+
+-- Dumping data for table factions_manager.units: ~0 rows (approximately)
+/*!40000 ALTER TABLE `units` DISABLE KEYS */;
+INSERT INTO `units` (`id`, `faction`, `sName`, `name`, `db_col`, `active`) VALUES
+	(1, 'apc', 'NPAS', 'National Police Air Service', 'npaslevel', 1);
+/*!40000 ALTER TABLE `units` ENABLE KEYS */;
+
+-- Dumping structure for table factions_manager.units_members
+CREATE TABLE IF NOT EXISTS `units_members` (
+  `unit_id` int(11) NOT NULL,
+  `member_id` int(11) NOT NULL,
+  `rank_id` int(11) NOT NULL,
+  `rankdate` timestamp NOT NULL DEFAULT current_timestamp(),
+  `joindate` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- Dumping data for table factions_manager.units_members: ~0 rows (approximately)
+/*!40000 ALTER TABLE `units_members` DISABLE KEYS */;
+/*!40000 ALTER TABLE `units_members` ENABLE KEYS */;
+
+-- Dumping structure for table factions_manager.units_ranks
+CREATE TABLE IF NOT EXISTS `units_ranks` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `unit_id` int(11) NOT NULL,
+  `name` varchar(50) NOT NULL,
+  `level` int(11) NOT NULL,
+  `active` tinyint(4) NOT NULL DEFAULT 0,
+  `system` tinyint(4) NOT NULL DEFAULT 0,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+
+-- Dumping data for table factions_manager.units_ranks: ~5 rows (approximately)
+/*!40000 ALTER TABLE `units_ranks` DISABLE KEYS */;
+INSERT INTO `units_ranks` (`id`, `unit_id`, `name`, `level`, `active`, `system`) VALUES
+	(1, 1, 'Not In Unit', 0, 1, 1),
+	(2, 1, 'Tier 1', 1, 1, 0),
+	(3, 1, 'Tier 2', 2, 1, 0),
+	(4, 1, 'Tier 3', 3, 1, 0),
+	(5, 1, 'Command', 3, 1, 0);
+/*!40000 ALTER TABLE `units_ranks` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
 /*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;

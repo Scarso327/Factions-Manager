@@ -83,16 +83,39 @@ class Faction extends Controller {
                     }
                 }
                 
+                $css = array ("custom/view.css");
+
                 // Allows us to run custom code per page
                 switch ($subpage) {
                     case '':
                         $params["history"] = self::getHistory($steamid);
                         break;
+                    case 'units':
+                        $params["units"] = Units::getUnits(self::$var);
+
+                        if (!$params["units"]) {
+                            new DisplayError("#404");
+                            return;
+                        }
+
+                        $units = array();
+
+                        foreach ($params["units"] as $unit) {
+                            $unit = Units::getUnit(self::$var, $unit->id);
+
+                            if ($unit) {
+                                $units[$unit["unit"]->name] = $unit;
+                            }
+                        }
+
+                        $params["units"] = $units;
+                        array_push($css, 'custom/units.css');
+                        break;
                 }
 
                 Controller::addCrumb(array($member->name, self::$var."/member/".$steamid));
                 Controller::buildPage(array(ROOT . 'views/navbar', ROOT . 'views/faction/member/member'), array(
-                    "css" => array ("custom/view.css"),
+                    "css" => $css,
                     "member" => $member,
                     "steam" => Steam::getSteamInfo($steamid),
                     "powers" => $powers,
@@ -165,6 +188,48 @@ class Faction extends Controller {
                 "fields" => $fields
             ));
         }
+    }
+
+    public function units($unit = null) {
+        $views = array (
+            ROOT . 'views/navbar'
+        );
+        $params = array (
+            "css" => array (
+                'custom/units.css'
+            )
+        );
+
+        Controller::$subPage = "Units";
+        Controller::addCrumb(array("Units", self::$var."/units/"));
+
+        if ($unit == null) {
+            array_push($views,  ROOT . 'views/faction/units/list');
+            $params["units"] = Units::getUnits(self::$var);
+
+            if (!$params["units"]) {
+                new DisplayError("#404");
+                return;
+            }
+        } else {
+            array_push($views,  ROOT . 'views/faction/units/page');
+
+            $unit = Filter::XSSFilter($unit);
+            $params["unit"] = Units::getUnit(self::$var, $unit);
+
+            if (!$params["unit"]) {
+                new DisplayError("#404");
+                return;
+            }
+
+            $params["unit_ranks"] = $params["unit"]["ranks"];
+            $params["unit"] = $params["unit"]["unit"];
+            $params["unit_members"] = Units::getUnitMembers($unit);
+
+            Controller::addCrumb(array($params["unit"]->name, self::$var."/units/".$unit));
+        }
+
+        Controller::buildPage($views, $params);
     }
 
     public function stats() {

@@ -122,6 +122,49 @@
                     </table>
                     <?php
                     break;
+                case 'units':
+                    ?>
+                    <div class="unit-items">
+                        <?php
+                        $units = $this->params["units"];
+                        if ($units) {
+                            foreach ($units as $name=>$unit) {
+                                $rank = Member::getUnitRank($this->member->id, $unit["unit"]->id);
+                                $curRank = (($rank) ? $rank->rank_id : -1);
+                                ?>
+                                <ul class="unit-item">
+                                    <li><img src="<?=URL."img/units/".$unit["unit"]->sName;?>.png"/></li>
+                                    <li><span><?=$name;?></span></li>
+                                    <li>
+                                        <?php
+                                        if (Units::canChangeRank($this->member, Faction::$var)) {
+                                            ?>
+                                            <select rank-dropdown data-faction="<?=Faction::$var;?>" data-steamid="<?=$this->member->steamid;?>" data-unitid="<?=$unit["unit"]->id;?>">
+                                                <?php
+                                                foreach ($unit["ranks"] as $rank) {
+                                                    echo '<option value="'.$rank->id.'"'.(($rank->id == $curRank) ? 'selected' : '').'>'.$rank->name.'</option>';
+                                                }
+                                                ?>
+                                            </select>
+                                            <?php
+                                        } else {
+                                            foreach ($unit["ranks"] as $rank) {
+                                                if ($rank->id == $curRank) {
+                                                    echo '<option value="'.$rank->id.'"'.(($rank->id == $curRank) ? 'selected' : '').'>'.$rank->name.'</option>';
+                                                }
+                                            }
+                                        }
+                                        ?>
+                                    </li>
+                                </ul>
+                                <?php
+                            }
+                        }
+                        ?>
+                    </div>
+                    <script src='<?=URL;?>js/unit.js'></script>
+                    <?php
+                    break;
             }
             ?>
         </div>
