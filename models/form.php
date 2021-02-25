@@ -39,8 +39,8 @@ class Form {
         
         $ranks = Application::getRanks($var);
         
-        usort($ranks, function ($rank1, $rank2) use ($faction) {
-            return Factions::orderRanks($faction, $rank1, $rank2);
+        usort($ranks, function ($rank1, $rank2) {
+            return Factions::orderRanks($rank1, $rank2);
         });
 
         foreach ($ranks as $rank) {
