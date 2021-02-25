@@ -34,30 +34,33 @@ class Admin extends Controller {
     }
 
     public function whitelist ($faction = "apc") {
-        $query = Database::getFactory()->getConnection(DB_NAME)->prepare("SELECT steamid, mainlevel FROM ".$faction." WHERE isSuspended = '0' AND isLOA = '0' AND isHoliday = '0' AND isArchive = '0'");
-        $query->execute();
+        $query = Database::getFactory()->getConnection(DB_NAME)->prepare("SELECT steamid, mainlevel FROM members WHERE faction = :faction AND isSuspended = '0' AND isLOA = '0' AND isHoliday = '0' AND isArchive = '0'");
+        $query->execute(array(":faction" => $faction));
 
-        if ($query->rowCount() == 0) { return false; }
+        if ($query->rowCount() == 1) {
+            $results = $query->fetchAll();
+            $ranks = Application::getRanks($faction);
 
-        $results = $query->fetchAll();
-        $ranks = Application::getRanks($faction);
+            $API = new API;
+            $API->internal = true;
 
-        $API = new API;
-        $API->internal = true;
-
-        foreach ($results as $result) {
-            $API->whitelist($faction, $result->steamid, "main", ($ranks[$result->mainlevel])->level);
-            // Database::changeLiveRank($result->steamid, $result->mainlevel, "coplevel");
+            foreach ($results as $result) {
+                $API->whitelist($faction, $result->steamid, "main", ($ranks[$result->mainlevel])->level);
+            }
         }
-        
+
         header("Location: ".URL."admin/");
     }
 
     public function dewhitelist ($column = "coplevel") {
         $column = Filter::XSSFilter($column);
 
-        $db = $db->prepare("UPDATE ".SETTING["db-player-table"]." SET ".$column." = '0'");
-        $db->execute();
+        $db = Database::getFactory(true)->getConnection(DB_NAME_LIFE, array(DB_HOST_LIFE, DB_USER_LIFE, DB_PASS_LIFE), true);
+
+        if ($db) {
+            $db = $db->prepare("UPDATE ".SETTING["db-player-table"]." SET ".$column." = '0'");
+            $db->execute();
+        }
 
         header("Location: ".URL."admin/");
     }
