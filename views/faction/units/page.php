@@ -25,8 +25,8 @@
             </tr>
             <?php
             if ($members) {
-                usort($members, function ($member1, $member2) use ($faction) {
-                    return Units::orderMembers($faction, $member1, $member2);
+                usort($members, function ($member1, $member2) {
+                    return Units::orderMembers($this->unit_ranks, $member1, $member2);
                 });
 
                 foreach ($members as $member) {

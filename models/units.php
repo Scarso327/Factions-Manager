@@ -55,16 +55,16 @@ class Units {
         return $query->fetch();
     }
 
-    public static function orderMembers($faction, $member1, $member2) {
-        $ranks = Application::getRanks($faction);
-
-        $m1Rank = $ranks[$member1->rank]->level;
-        $m2Rank = $ranks[$member2->rank]->level;
+    public static function orderMembers($ranks, $member1, $member2) {
+        $m1Rank = $ranks[$member1->unit_rank]->level;
+        $m2Rank = $ranks[$member2->unit_rank]->level;
 
         if ($m1Rank != $m2Rank) {
             return $m1Rank < $m2Rank;
+        } else if ($member1->unit_rank != $member2->unit_rank) {
+            return $member1->unit_rank < $member2->unit_rank;
         } else {
-            return strtotime($member1->last_rank_change) > strtotime($member2->last_rank_change);
+            return strtotime($member1->rankdate) > strtotime($member2->rankdate);
         }
     }
 
