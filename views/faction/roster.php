@@ -63,6 +63,7 @@
                 <th>Name</th>
                 <th>Rank</th>
                 <th>Steam ID</th>
+                <th>Section</th>
                 <th>Status</th>
                 <th>Join Date</th>
                 <th title="Date of Last Promotion / Demotion">Rank Date</th>
@@ -93,6 +94,7 @@
                             <td><?=$member->name;?></td>
                             <td><?=Application::getRanks($faction)[$member->mainlevel]->sName?></td>
                             <td><?=$member->steamid;?></td>
+                            <td><?=$member->section;?></td>
                             <td class = "status <?=$activity?>" title="<?=date('d/m/Y H:i:s', strtotime($member->last_login));?>"><?=$activity?></td>
                             <td><?=date("d/m/Y", strtotime($member->joindate))?></td>
                             <td><?=date("d/m/Y", strtotime($member->last_rank_change))?></td>
