@@ -112,7 +112,7 @@ class API extends Controller {
             exit;
         }
 
-        if (!Units::canChangeRank($staff, $faction)) {
+        if (!Units::canDoUnit($staff->mainlevel, $faction)) {
             if ($this->internal) { return false; }
             self::return(array("result" => "fail", "reason" => "no-permission"));
             exit;
