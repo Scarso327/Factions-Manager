@@ -29,10 +29,15 @@
                 </tr>
                 <?php
                 foreach ($this->units as $unit) {
+                    $ranks = Units::getUnit(Faction::$var, $unit->id)["ranks"];
+                    $members = array_filter(Units::getUnitMembers($unit->id), function($member) use ($ranks) {
+                        return !Units::canDoUnit($member->rank, Faction::$var, "unit_hide_roster") && $ranks[$member->unit_rank]->level > 0;
+                    });
+
                     echo '
                     <tr>
                         <td>'.$unit->name.'</td>
-                        <td>'.count(Units::getUnitMembers($unit->id)).'</td>
+                        <td>'.count($members).'</td>
                     </tr>
                     ';
                 }
