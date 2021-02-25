@@ -3,8 +3,9 @@
 class Member {
 
     public static function archive($faction, $steamid) {
-        API::$internal = true;
-        API::whitelist($faction, $steamid, "main", 0);
+        $API = new API;
+        $API->internal = true;
+        $API->whitelist($faction, $steamid, "main", 0);
 
         $lowestRank = Application::$factions[$faction]["defaultRank"];
 
@@ -34,8 +35,9 @@ class Member {
         if ($query->rowCount() == 1) {
             $rank = (Application::getRanks($faction)[$rank])->level;
 
-            API::$internal = true;
-            API::whitelist($faction, $steamid, "main", $rank);
+            $API = new API;
+            $API->internal = true;
+            $API->whitelist($faction, $steamid, "main", $rank);
 
             return true;
         }
@@ -54,8 +56,9 @@ class Member {
         if ($query->rowCount() == 1) {
             $rank = (Application::getRanks($faction)[$newRank])->level;
 
-            API::$internal = true;
-            API::whitelist($faction, $steamid, "main", $rank);
+            $API = new API;
+            $API->internal = true;
+            $API->whitelist($faction, $steamid, "main", $rank);
 
             return true;
         }

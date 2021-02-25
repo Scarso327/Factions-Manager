@@ -23,8 +23,9 @@ class Actions {
 
         $rank = (Application::getRanks($faction)[$rank])->level;
 
-        API::$internal = true;
-        API::whitelist($faction, $steamid, "main", $rank);
+        $API = new API;
+        $API->internal = true;
+        $API->whitelist($faction, $steamid, "main", $rank);
 
         if ($query->rowCount() == 1) {
             return true;
@@ -56,13 +57,14 @@ class Actions {
 
         $suspended = (Member::isState($faction, $steamid, "isSuspended"));
 
-        API::$internal = true; // We're using it interally...
+        $API = new API;
+        $API->internal = true; // We're using it interally...
 
         // Whitelisting...
         if (!$suspended) {
-            $apiRet = API::whitelist($faction, $steamid, "main", 0);
+            $apiRet = $API->whitelist($faction, $steamid, "main", 0);
         } else {
-            $apiRet = API::whitelist($faction, $steamid, "main", ((Application::getRanks($faction)[$member->mainlevel])->level));
+            $apiRet = $API->whitelist($faction, $steamid, "main", ((Application::getRanks($faction)[$member->mainlevel])->level));
         }
 
         if (!$apiRet) { return false; }

@@ -2,7 +2,7 @@
 
 class API extends Controller {
 
-    public static $internal = false; // Indicates whether we require internal "feedback"...
+    public $internal = false; // Indicates whether we require internal "feedback"...
 
     public function __construct() {
         header('Content-Type: application/json');
@@ -15,22 +15,22 @@ class API extends Controller {
     public function info () {
         $info = array("version" => API_VER);
 
-        if (self::$internal) { return $info; }
+        if ($this->internal) { return $info; }
         self::return($info);
     }
 
     public function responses ($faction) {
-        if (!self::$internal) { self::auth($faction); } // Only required if external...
+        if (!$this->internal) { $this->auth($faction); } // Only required if external...
 
         $responses = Logs::getResponse($_POST['id']);
 
         if (!$responses) {
-            if (self::$internal) { return false; }
+            if ($this->internal) { return false; }
             self::return(array("result" => "fail", "reason" => "response-not-found"));
             exit;
         }
 
-        if (self::$internal) { return true; }
+        if ($this->internal) { return true; }
         self::return(array(
             "result" => "success", 
             "responses" => $responses
@@ -38,16 +38,16 @@ class API extends Controller {
     }
 
     public function whitelist ($faction, $steamid = null, $type = null, $level = -1) {
-        if (!self::$internal) { self::auth($faction); } // Only required if external...
+        if (!$this->internal) { $this->auth($faction); } // Only required if external...
 
         if ($steamid == null || $type == null || $level == -1) {
-            if (self::$internal) { return false; }
+            if ($this->internal) { return false; }
             self::return(array("result" => "fail", "reason" => "invalid-data"));
             exit;
         }
         
         if (!Steam::isSteamID($steamid)) {
-            if (self::$internal) { return false; }
+            if ($this->internal) { return false; }
             self::return(array("result" => "fail", "reason" => "steamid-validation-fail"));
             exit;
         }
@@ -58,7 +58,7 @@ class API extends Controller {
                 $type = Application::$factions[$faction]["rank"];
                 break;
             default:
-                if (self::$internal) { return false; }
+                if ($this->internal) { return false; }
                 self::return(array("result" => "fail", "reason" => "unknown-type"));
                 exit;
         }
@@ -67,7 +67,7 @@ class API extends Controller {
         $db = Database::getFactory(true)->getConnection(DB_NAME_LIFE, array(DB_HOST_LIFE, DB_USER_LIFE, DB_PASS_LIFE), true);
 
         if (!$db) {
-            if (self::$internal) { return false; }
+            if ($this->internal) { return false; }
             self::return(array("result" => "fail", "reason" => "db-connection-failed"));
             exit;
         }
@@ -79,47 +79,47 @@ class API extends Controller {
         ));
 
         if ($db->errorCode() != "0000") {
-            if (self::$internal) { return false; }
+            if ($this->internal) { return false; }
             self::return(array("result" => "fail", "reason" => $db->errorInfo()[2]));
             exit;
         }
 
         if ($db->rowCount() == 0) {
-            if (self::$internal) { return false; }
+            if ($this->internal) { return false; }
             self::return(array("result" => "fail", "reason" => "no-rows-updated"));
             exit;
         }
 
-        if (self::$internal) { return true; }
+        if ($this->internal) { return true; }
         self::return(array("result" => "success", "responses" => array("steamid" => $steamid, "column" => $type, "level" => $level)));
     }
     
     public function unit () {
         if (!isset($_POST['faction'])) {
-            if (self::$internal) { return false; }
+            if ($this->internal) { return false; }
             self::return(array("result" => "fail", "reason" => "faction-not-set"));
             exit;
         }
   
         $faction = $_POST['faction'];
 
-        if (!self::$internal) { self::auth($faction); } // Only required if external...
+        if (!$this->internal) { $this->auth($faction); } // Only required if external...
 
         $staff = Factions::getMember($faction, Account::$steamid);
         if ($staff == null) {
-            if (self::$internal) { return false; }
+            if ($this->internal) { return false; }
             self::return(array("result" => "fail", "reason" => "admin-not-found"));
             exit;
         }
 
         if (!Units::canChangeRank($staff, $faction)) {
-            if (self::$internal) { return false; }
+            if ($this->internal) { return false; }
             self::return(array("result" => "fail", "reason" => "no-permission"));
             exit;
         }
 
         if (!isset($_POST['steamid']) || !isset($_POST['unit_id']) || !isset($_POST['rank_id'])) {
-            if (self::$internal) { return false; }
+            if ($this->internal) { return false; }
             self::return(array("result" => "fail", "reason" => "invalid-data"));
             exit;
         }
@@ -129,7 +129,7 @@ class API extends Controller {
         $rank_id = $_POST['rank_id'];
 
         if (!Steam::isSteamID($steamid)) {
-            if (self::$internal) { return false; }
+            if ($this->internal) { return false; }
             self::return(array("result" => "fail", "reason" => "steamid-validation-fail"));
             exit;
         }
@@ -137,7 +137,7 @@ class API extends Controller {
         $unit = Units::getUnit($faction, $unit_id);
 
         if (!$unit) {
-            if (self::$internal) { return false; }
+            if ($this->internal) { return false; }
             self::return(array("result" => "fail", "reason" => "unit-doesnt-exist"));
             exit;
         }
@@ -145,21 +145,21 @@ class API extends Controller {
         $unit = $unit["unit"];
 
         if ($unit->db_col == "") {
-            if (self::$internal) { return false; }
+            if ($this->internal) { return false; }
             self::return(array("result" => "fail", "reason" => "unit-doesnt-have-col"));
             exit;
         }
 
         $member = Factions::getMember($faction, $steamid);
         if (!$member) {
-            if (self::$internal) { return false; }
+            if ($this->internal) { return false; }
             self::return(array("result" => "fail", "reason" => "member-doesnt-exist"));
             exit;
         }
 
         $rank = Units::getUnitRank($unit_id, $rank_id);
         if (!$rank) {
-            if (self::$internal) { return false; }
+            if ($this->internal) { return false; }
             self::return(array("result" => "fail", "reason" => "rank-id-doesnt-exist"));
             exit;
         }
@@ -178,14 +178,14 @@ class API extends Controller {
         );
 
         if (!Logs::log($faction, $fields, Account::$steamid, "Unit", "Rank Changed", 0)) {
-            if (self::$internal) { return false; }
+            if ($this->internal) { return false; }
             self::return(array("result" => "fail", "reason" => "log-failed"));
             exit;
         }
 
         if (!Member::setUnitRank($member->id, $unit_id, $rank_id)) {
             if (!Member::addUnitRank($member->id, $unit_id, $rank_id)) {
-                if (self::$internal) { return false; }
+                if ($this->internal) { return false; }
                 self::return(array("result" => "fail", "reason" => "local-set-rank-failed"));
                 exit;
             }
@@ -194,7 +194,7 @@ class API extends Controller {
         $db = Database::getFactory(true)->getConnection(DB_NAME_LIFE, array(DB_HOST_LIFE, DB_USER_LIFE, DB_PASS_LIFE), true);
 
         if (!$db) {
-            if (self::$internal) { return false; }
+            if ($this->internal) { return false; }
             self::return(array("result" => "fail", "reason" => "db-connection-failed"));
             exit;
         }
@@ -206,18 +206,18 @@ class API extends Controller {
         ));
 
         if ($db->errorCode() != "0000") {
-            if (self::$internal) { return false; }
+            if ($this->internal) { return false; }
             self::return(array("result" => "fail", "reason" => $db->errorInfo()[2]));
             exit;
         }
 
         if ($db->rowCount() == 0) {
-            if (self::$internal) { return false; }
+            if ($this->internal) { return false; }
             self::return(array("result" => "fail", "reason" => "no-rows-updated"));
             exit;
         }
         
-        if (self::$internal) { return true; }
+        if ($this->internal) { return true; }
         self::return(array("result" => "success", "responses" => array("steamid" => $steamid, "unit_id" => $unit_id, "rank" => $rank->name)));
     }
 
@@ -228,7 +228,7 @@ class API extends Controller {
             setcookie("dark-theme", true, time() + (10 * 365 * 24 * 60 * 60), "/");
         }
 
-        if (self::$internal) { return true; } // Wtf...
+        if ($this->internal) { return true; } // Wtf...
         self::return(array("result" => "success"));
     }
 
@@ -239,11 +239,11 @@ class API extends Controller {
             setcookie("show-staff", true, time() + (10 * 365 * 24 * 60 * 60), "/");
         }
 
-        if (self::$internal) { return true; } // Wtf...
+        if ($this->internal) { return true; } // Wtf...
         self::return(array("result" => "success"));
     }
 
-    private function auth ($faction) {
+    private function auth($faction) {
         parent::__construct(true);
 
         if (!Factions::isMember($faction, Account::$steamid)) {
