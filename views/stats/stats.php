@@ -46,7 +46,7 @@
                 <th COLSPAN=2>Ranks</th>
             </tr>
             <?php
-            foreach (Application::getRanks(Faction::$var) as $rank) {
+            foreach (array_reverse(Application::getRanks(Faction::$var)) as $rank) {
                 if ($rank->system == 0) {
                     echo '
                     <tr>
