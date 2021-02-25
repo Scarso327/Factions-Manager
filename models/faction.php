@@ -69,7 +69,7 @@ class Factions {
         $return = array();
 
         foreach ($members as $member) {
-            if ($member->mainlevel == $rank) {
+            if ($member->mainlevel == $rank && $member->section != "Staff") {
                 array_push($return, $member);
             }
         }
