@@ -30,14 +30,15 @@
                 });
 
                 foreach ($members as $member) {
-                    if (!Units::canDoUnit($member->rank, $faction, "unit_hide_roster")) {
+                    $rank = $this->unit_ranks[$member->unit_rank];
+                    if (!Units::canDoUnit($member->rank, $faction, "unit_hide_roster") && $rank->level > 0) {
                         ?>
                         <tr id = "<?=$member->steamid;?>">
                             <td><?=Member::getCustomID($faction, $member)?></td>
                             <td><?=$member->name;?></td>
                             <td><?=Application::getRanks($faction)[$member->rank]->sName?></td>
                             <td><?=$member->steamid;?></td>
-                            <td><?=$this->unit_ranks[$member->unit_rank]->name;?></td>
+                            <td><?=$rank->name;?></td>
                             <td><?=date("d/m/Y", strtotime($member->joindate))?></td>
                             <td><?=date("d/m/Y", strtotime($member->rankdate))?></td>
                             <td class = "manage"><a href="<?=URL.($faction)."/".$member->steamid."/units";?>">Manage</a></td>
