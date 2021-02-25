@@ -63,6 +63,20 @@ class Factions {
         return $return;
     }
 
+    public static function getFactionMembersByRank($faction, $rank) {
+        $members = self::getFactionMembers($faction);
+
+        $return = array();
+
+        foreach ($members as $member) {
+            if ($member->mainlevel == $rank) {
+                array_push($return, $member);
+            }
+        }
+
+        return $return;
+    }
+
     public static function getActiveFactionMembers ($faction) {
         $members = self::getFactionMembers($faction);
 

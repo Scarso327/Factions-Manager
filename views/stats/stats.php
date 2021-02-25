@@ -21,6 +21,44 @@
             ?>
         </table>
         <?php
+        if ($this->units) {
+            ?>
+            <table class = "stats-table">
+                <tr class = "first">   
+                    <th COLSPAN=2>Units</th>
+                </tr>
+                <?php
+                foreach ($this->units as $unit) {
+                    echo '
+                    <tr>
+                        <td>'.$unit->name.'</td>
+                        <td>'.count(Units::getUnitMembers($unit->id)).'</td>
+                    </tr>
+                    ';
+                }
+                ?>
+            </table>
+            <?php
+        }
+        ?>
+        <table class = "stats-table">
+            <tr class = "first">   
+                <th COLSPAN=2>Ranks</th>
+            </tr>
+            <?php
+            foreach (Application::getRanks(Faction::$var) as $rank) {
+                if ($rank->system == 0) {
+                    echo '
+                    <tr>
+                        <td>'.$rank->name.'</td>
+                        <td>'.count(Factions::getFactionMembersByRank(Faction::$var, $rank->id)).'</td>
+                    </tr>
+                    ';
+                }
+            }
+            ?>
+        </table>
+        <?php
         $activeMembers = count(Factions::getActiveFactionMembers(Faction::$var));
         $totalMembers = count(Factions::getFactionMembers(Faction::$var));
         ?>

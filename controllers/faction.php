@@ -242,7 +242,8 @@ class Faction extends Controller {
             "css" => array (
                 'custom/stats.css'
             ),
-            "sections" => Application::getSections(self::$var)
+            "sections" => Application::getSections(self::$var),
+            "units" => Units::getUnits(self::$var)
         );
         
         Controller::$subPage = "Stats";
