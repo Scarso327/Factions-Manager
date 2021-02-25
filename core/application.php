@@ -122,7 +122,7 @@ class Application {
     }
 
     // Usefulfor doing what the name says...
-    public function getRankIDFromName ($faction, $name) {
+    public static function getRankIDFromName ($faction, $name) {
         $factionArr = self::$factions[$faction];
 
         foreach ($factionArr["ranks"] as $rank) {
