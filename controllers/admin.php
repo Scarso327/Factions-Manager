@@ -35,10 +35,13 @@ class Admin extends Controller {
 
     public function whitelist ($faction = "apc") {
         $query = Database::getFactory()->getConnection(DB_NAME)->prepare("SELECT steamid, mainlevel FROM members WHERE faction = :faction AND isSuspended = '0' AND isLOA = '0' AND isHoliday = '0' AND isArchive = '0'");
-        $query->execute(array(":faction" => $faction));
+        $query->execute(array(
+            ':faction' => $faction
+        ));
 
-        if ($query->rowCount() == 1) {
-            $results = $query->fetchAll();
+        $results = $query->fetchAll();
+
+        if (count($results) >= 1) {
             $ranks = Application::getRanks($faction);
 
             $API = new API;
