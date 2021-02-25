@@ -40,16 +40,25 @@ class Admin extends Controller {
         if ($query->rowCount() == 0) { return false; }
 
         $results = $query->fetchAll();
+        $ranks = Application::getRanks($faction);
+
+        $API = new API;
+        $API->internal = true;
 
         foreach ($results as $result) {
-            Database::changeLiveRank($result->steamid, $result->mainlevel, "coplevel");
+            $API->whitelist($faction, $result->steamid, "main", ($ranks[$result->mainlevel])->level);
+            // Database::changeLiveRank($result->steamid, $result->mainlevel, "coplevel");
         }
         
         header("Location: ".URL."admin/");
     }
 
-    public function dewhitelist ($faction = "coplevel") {
-        Database::wipeRanks($faction);
+    public function dewhitelist ($column = "coplevel") {
+        $column = Filter::XSSFilter($column);
+
+        $db = $db->prepare("UPDATE ".SETTING["db-player-table"]." SET ".$column." = '0'");
+        $db->execute();
+
         header("Location: ".URL."admin/");
     }
 }
