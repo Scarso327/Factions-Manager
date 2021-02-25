@@ -247,10 +247,8 @@ class API extends Controller {
         parent::__construct(true);
 
         if (!Factions::isMember($faction, Account::$steamid)) {
-            if (!self::auth($faction)) {
-                self::return(array("result" => "fail", "reason" => "auth-failed"));
-                exit;
-            }
+            return(array("result" => "fail", "reason" => "auth-failed"));
+            exit;
         };
 
         return true;
