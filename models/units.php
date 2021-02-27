@@ -68,13 +68,13 @@ class Units {
         }
     }
 
-    public static function canDoUnit($level, $faction, $value = "unit_promote") {
+    public static function canDoUnit($main_rank, $faction, $unit_rank, $value = "unit_promote") {
         if (!Account::isLoggedIn()) { return false; } // Must be logged in...
         
-        $rank = Application::getRanks($faction)[$level];
+        $main_rank = Application::getRanks($faction)[$main_rank];
 
-        if (!property_exists($rank, $value)) { return false; }
-        if ((Application::getRanks($faction)[$level]->$value) == 0) { return false; }
+        if (!property_exists($main_rank, $value) && !property_exists($unit_rank, $value)) { return false; }
+        if (($main_rank->$value) == 0 && ($unit_rank->$value) == 0) { return false; }
 
         return true;
     }

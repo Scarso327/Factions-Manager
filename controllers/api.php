@@ -112,12 +112,6 @@ class API extends Controller {
             exit;
         }
 
-        if (!Units::canDoUnit($staff->mainlevel, $faction)) {
-            if ($this->internal) { return false; }
-            self::return(array("result" => "fail", "reason" => "no-permission"));
-            exit;
-        }
-
         if (!isset($_POST['steamid']) || !isset($_POST['unit_id']) || !isset($_POST['rank_id'])) {
             if ($this->internal) { return false; }
             self::return(array("result" => "fail", "reason" => "invalid-data"));
@@ -139,6 +133,20 @@ class API extends Controller {
         if (!$unit) {
             if ($this->internal) { return false; }
             self::return(array("result" => "fail", "reason" => "unit-doesnt-exist"));
+            exit;
+        }
+
+        $staffRank = Member::getUnitRank($staff->id, $unit["unit"]->id);
+
+        if (!$staffRank) {
+            if ($this->internal) { return false; }
+            self::return(array("result" => "fail", "reason" => "no-permission"));
+            exit;
+        }
+
+        if (!Units::canDoUnit($staff->mainlevel, $faction, $unit["ranks"][$staffRank->rank_id])) {
+            if ($this->internal) { return false; }
+            self::return(array("result" => "fail", "reason" => "no-permission"));
             exit;
         }
 

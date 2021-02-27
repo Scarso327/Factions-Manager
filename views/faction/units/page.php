@@ -31,7 +31,7 @@
 
                 foreach ($members as $member) {
                     $rank = $this->unit_ranks[$member->unit_rank];
-                    if (!Units::canDoUnit($member->rank, $faction, "unit_hide_roster") && $rank->level > 0) {
+                    if (!Units::canDoUnit($member->rank, $faction, $rank, "unit_hide_roster") && $rank->level > 0) {
                         ?>
                         <tr id = "<?=$member->steamid;?>">
                             <td><?=Member::getCustomID($faction, $member)?></td>
